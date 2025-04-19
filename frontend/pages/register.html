@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đăng ký - Legal Helper</title>
+  <link rel="stylesheet" href="../css/register.css" />
+</head>
+<body>
+  <div class="register-page fade-in">
+    <div class="left-section slide-left">
+      <img src="../assets/legal_img.jpg" alt="Hình minh hoạ" class="illustration pop-in" />
+    </div>
+
+    <div class="right-section slide-up">
+      <div class="form-wrapper">
+        <h2 class="pop-in">Tạo tài khoản mới</h2>
+        <p class="fade-in-delayed">Đăng ký để sử dụng Legal Helper</p>
+
+        <form id="registerForm">
+          <input type="text" name="full_name" placeholder="Họ và tên" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <input type="password" name="password" placeholder="Mật khẩu" required />
+          <button type="submit" class="register-button">Đăng ký</button>
+        </form>
+
+        <div class="bottom-link fade-in-delayed">
+          <span>Đã có tài khoản?</span>
+          <a href="login.html">Đăng nhập</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Đăng ký thành công!");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
