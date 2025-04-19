@@ -1,9 +1,12 @@
 :root {
-  --blue: #007BFF;
-  --blue-dark: #0056b3;
-  --gray: #ccc;
-  --light: #f5faff;
-  --text: #222;
+  --primary-color: #6c63ff;       /* Tím chính */
+  --secondary-color: #4b45c4;     /* Tím đậm hover */
+  --gray: #ced4da;                /* Xám border */
+  --light: #f8f9fa;               /* Nền sáng */
+  --text-color: #212529;          /* Màu chữ chính */
+  --muted-color: #666;            /* Màu chữ phụ */
+  --white: #ffffff;
+  --input-bg: #f9fbff;
 }
 
 * {
@@ -15,7 +18,8 @@
 body, html {
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #fff;
+  background-color: var(--white);
+  color: var(--text-color);
 }
 
 .login-page {
@@ -25,7 +29,7 @@ body, html {
 
 .left-section {
   width: 40%;
-  background: #f0f8ff;
+  background: var(--light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,12 +40,12 @@ body, html {
   max-width: 90%;
   height: auto;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(108, 117, 125, 0.1);
 }
 
 .right-section {
   width: 60%;
-  background-color: #fff;
+  background-color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,13 +60,13 @@ body, html {
 
 h2 {
   font-size: 1.8rem;
-  color: var(--text);
+  color: var(--text-color);
   margin-bottom: 10px;
 }
 
 .form-wrapper > p {
   font-size: 1rem;
-  color: #666;
+  color: var(--muted-color);
   margin-bottom: 24px;
 }
 
@@ -73,19 +77,19 @@ form input {
   border: 1px solid var(--gray);
   border-radius: 8px;
   font-size: 1rem;
-  background-color: #f9fbff;
+  background-color: var(--input-bg);
   transition: border-color 0.3s ease;
 }
 
 form input:focus {
-  border-color: var(--blue);
+  border-color: var(--primary-color);
   outline: none;
 }
 
 .login-button {
   width: 100%;
   padding: 12px;
-  background: var(--blue);
+  background: var(--primary-color);
   color: white;
   font-size: 1rem;
   font-weight: bold;
@@ -96,7 +100,7 @@ form input:focus {
 }
 
 .login-button:hover {
-  background: var(--blue-dark);
+  background: var(--secondary-color);
   transform: scale(1.01);
 }
 
@@ -107,7 +111,7 @@ form input:focus {
 }
 
 .bottom-link a {
-  color: var(--blue);
+  color: var(--primary-color);
   text-decoration: none;
   font-weight: 500;
 }

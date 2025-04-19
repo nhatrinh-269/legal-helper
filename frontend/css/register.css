@@ -1,11 +1,12 @@
 :root {
-  --blue: #007BFF;
-  --blue-dark: #0056b3;
-  --gray: #ccc;
-  --light: #f5faff;
-  --text: #222;
+  --primary-color: #6c63ff;       /* Tím chính */
+  --secondary-color: #4b45c4;     /* Tím đậm hover */
+  --gray: #ced4da;                /* Xám border */
+  --light: #f5faff;               /* Nền sáng */
+  --text: #212529;                /* Màu chữ chính */
 }
 
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -18,15 +19,16 @@ body, html {
   background-color: #fff;
 }
 
+/* PAGE LAYOUT */
 .register-page {
   display: flex;
   height: 100vh;
 }
 
-/* BÊN TRÁI */
+/* LEFT SECTION */
 .left-section {
   width: 40%;
-  background: #f0f8ff;
+  background: var(--light);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,10 +39,10 @@ body, html {
   max-width: 90%;
   height: auto;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(108, 117, 125, 0.1); /* tím nhạt */
 }
 
-/* BÊN PHẢI */
+/* RIGHT SECTION */
 .right-section {
   width: 60%;
   display: flex;
@@ -68,7 +70,7 @@ h2 {
   margin-bottom: 24px;
 }
 
-/* Form */
+/* FORM */
 form input {
   width: 100%;
   padding: 12px 16px;
@@ -81,14 +83,15 @@ form input {
 }
 
 form input:focus {
-  border-color: var(--blue);
+  border-color: var(--primary-color);
   outline: none;
 }
 
+/* BUTTON */
 .register-button {
   width: 100%;
   padding: 12px;
-  background: var(--blue);
+  background: var(--primary-color);
   color: white;
   font-size: 1rem;
   font-weight: bold;
@@ -99,11 +102,11 @@ form input:focus {
 }
 
 .register-button:hover {
-  background: var(--blue-dark);
+  background: var(--secondary-color);
   transform: scale(1.01);
 }
 
-/* Link bên dưới */
+/* LINK */
 .bottom-link {
   margin-top: 14px;
   font-size: 0.95rem;
@@ -111,7 +114,7 @@ form input:focus {
 }
 
 .bottom-link a {
-  color: var(--blue);
+  color: var(--primary-color);
   text-decoration: none;
   font-weight: 500;
 }
@@ -120,7 +123,7 @@ form input:focus {
   text-decoration: underline;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 900px) {
   .register-page {
     flex-direction: column;
@@ -144,6 +147,7 @@ form input:focus {
   }
 }
 
+/* ANIMATIONS */
 .fade-in {
   animation: fadeIn 0.8s ease;
 }
@@ -164,7 +168,6 @@ form input:focus {
   animation: slideUp 1s ease;
 }
 
-/* --- Animations --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
