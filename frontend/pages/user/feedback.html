@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback - Legal Helper</title>
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/user/feedback.css" />
+</head>
+<body>
+  <div class="feedback-layout fade-in">
+    <h1 class="title">Phản hồi của bạn</h1>
+
+    <!-- Phần nhập thông tin phản hồi -->
+    <div class="feedback-form">
+      <h3>Gửi phản hồi</h3>
+      <form id="feedbackForm">
+        <textarea id="feedbackInput" placeholder="Nhập phản hồi của bạn..." required></textarea>
+        <button type="submit" class="btn btn-primary">Gửi</button>
+      </form>
+    </div>
+
+    <!-- Lịch sử phản hồi -->
+    <div class="feedback-history">
+      <h3>Lịch sử phản hồi</h3>
+      <div class="feedback-item">
+        <p><strong>20/04/2025:</strong> Tôi rất hài lòng với dịch vụ của các bạn. Mong muốn được hỗ trợ nhiều hơn về các thủ tục pháp lý.</p>
+      </div>
+      <div class="feedback-item">
+        <p><strong>19/04/2025:</strong> Hệ thống rất hữu ích nhưng cần cải thiện thời gian phản hồi nhanh hơn.</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="chat.html" class="btn btn-secondary">Quay lại</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const feedbackText = document.getElementById("feedbackInput").value.trim();
+      if (!feedbackText) return;
+
+      const feedbackItem = document.createElement("div");
+      feedbackItem.classList.add("feedback-item");
+      feedbackItem.innerHTML = `<p><strong>Ngày hiện tại:</strong> ${feedbackText}</p>`;
+      document.querySelector(".feedback-history").appendChild(feedbackItem);
+
+      document.getElementById("feedbackInput").value = "";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Helper - Chat</title>
+  <link rel="stylesheet" href="../../css/user/chat.css" />
+</head>
+<body>
+  <div class="chat-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Nút tạo cuộc trò chuyện mới -->
+      <footer>
+        <button class="service-btn" onclick="location.href='chat.html'">Tạo cuộc trò chuyện mới</button>
+      </footer>
+
+      <header class="sidebar-header">
+        <h2>Lịch sử</h2>
+        <input type="text" class="search-bar" placeholder="Tìm kiếm cuộc trò chuyện..." />
+      </header>
+      
+      <div class="chat-history">
+        <div class="chat-session">
+          <div class="chat-title">🗓 20/04/2025 - Ly hôn</div>
+          <div class="chat-preview">"Tôi muốn hỏi về thủ tục ly hôn..."</div>
+        </div>
+        <div class="chat-session">
+          <div class="chat-title">🗓 19/04/2025 - Hợp đồng nhà</div>
+          <div class="chat-preview">"Có cần công chứng khi thuê nhà không?"</div>
+        </div>
+      </div>
+
+      <footer>
+        <button class="service-btn" onclick="location.href='../user/feedback.html'">Phản hồi</button>
+      </footer>
+
+      <footer>
+        <button class="service-btn" onclick="location.href='../user/subscription.html'">Xem các gói dịch vụ</button>
+      </footer>
+    </aside>
+
+    <!-- Chat Panel -->
+    <main class="chat-panel">
+      <section class="chat-window" id="chatWindow">
+        <a href="user_information.html" class="chat-avatar">
+          <img src="../../assets/legal_img.jpg" alt="avatar" />
+        </a>
+
+        <div class="message ai">
+          <div class="bubble">Tôi là chatbot Legal Helper. Bạn cần hỗ trợ gì?</div>
+        </div>
+      </section>
+
+      <form id="chatForm" class="chat-input">
+        <textarea id="chatInput" placeholder="Nhập câu hỏi của bạn..." required></textarea>
+        <button type="submit">Gửi</button>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    const form = document.getElementById("chatForm");
+    const input = document.getElementById("chatInput");
+    const windowEl = document.getElementById("chatWindow");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+
+      const msg = document.createElement("div");
+      msg.className = "message user";
+      msg.innerHTML = `<div class="bubble">${text}</div>`;
+      windowEl.appendChild(msg);
+
+      const reply = document.createElement("div");
+      reply.className = "message ai";
+      reply.innerHTML = `<div class="bubble">Đang xử lý câu hỏi...</div>`;
+      windowEl.appendChild(reply);
+
+      input.value = "";
+      windowEl.scrollTop = windowEl.scrollHeight;
+    });
+  </script>
+</body>
+</html>
