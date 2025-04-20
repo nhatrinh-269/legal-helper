@@ -22,7 +22,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
       }
   
       alert("✅ " + data.message);
-      window.location.href = "login.html";
+      window.location.href = "login";
     } catch (err) {
       console.error("Lỗi:", err);
       alert("Lỗi kết nối server");

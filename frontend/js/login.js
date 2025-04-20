@@ -27,7 +27,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
       // Animation rời đi
       document.querySelector(".form-wrapper").classList.add("fade-out");
       setTimeout(() => {
-        window.location.href = "user/chat.html";
+        window.location.href = "user/chat";
       }, 500);
     } catch (err) {
       alert("Lỗi kết nối server");

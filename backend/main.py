@@ -71,8 +71,8 @@ app.add_exception_handler(StarletteHTTPException, http_exception_handler)
 app.add_exception_handler(Exception, unhandled_exception_handler)
 
 # Mount thư mục static
-app.mount("/static", StaticFiles(directory="frontend/css"), name="css")
-app.mount("/js", StaticFiles(directory="frontend/js"), name="js")
+app.mount("/css", StaticFiles(directory="frontend/css"), name="css")
+app.mount("/js",  StaticFiles(directory="frontend/js"), name="js")
 app.mount("/assets", StaticFiles(directory="frontend/assets"), name="assets")
 
 # Thiết lập templates
