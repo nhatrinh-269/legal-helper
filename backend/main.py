@@ -50,21 +50,21 @@ app.add_middleware(
 app.include_router(auth_router.router, prefix="/api/v1", tags=["Auth"])
 
 # User routes
-app.include_router(user_chat_router.router, prefix="/api/v1/user", tags=["User Chat"])
-app.include_router(user_feedback_router.router, prefix="/api/v1/user", tags=["User Feedback"])
-app.include_router(user_payment_router.router, prefix="/api/v1/user", tags=["User Payment"])
-app.include_router(user_subscription_router.router, prefix="/api/v1/user", tags=["User Subscription"])
-app.include_router(user_info_router.router, prefix="/api/v1/user", tags=["User Info"])
+app.include_router(user_chat_router.router, prefix="/api/v1/user/chat", tags=["User Chat"])
+app.include_router(user_feedback_router.router, prefix="/api/v1/user/feedback", tags=["User Feedback"])
+app.include_router(user_payment_router.router, prefix="/api/v1/user/payment", tags=["User Payment"])
+app.include_router(user_subscription_router.router, prefix="/api/v1/user/subscription", tags=["User Subscription"])
+app.include_router(user_info_router.router, prefix="/api/v1/user/info", tags=["User Info"])
 
 # Admin routes
-app.include_router(admin_chats_router.router, prefix="/api/v1/admin", tags=["Admin Chats"])
-app.include_router(admin_users_router.router, prefix="/api/v1/admin", tags=["Admin Users"])
-app.include_router(admin_feedbacks_router.router, prefix="/api/v1/admin", tags=["Admin Feedbacks"])
-app.include_router(admin_plans_router.router, prefix="/api/v1/admin", tags=["Admin Plans"])
-app.include_router(admin_subscriptions_router.router, prefix="/api/v1/admin", tags=["Admin Subscriptions"])
-app.include_router(admin_payments_router.router, prefix="/api/v1/admin", tags=["Admin Payments"])
-app.include_router(admin_quota_router.router, prefix="/api/v1/admin", tags=["Admin Usage Quota"])
-app.include_router(admin_dashboard_router.router, prefix="/api/v1/admin", tags=["Admin Dashboard"])
+app.include_router(admin_chats_router.router, prefix="/api/v1/admin/chats", tags=["Admin Chats"])
+app.include_router(admin_users_router.router, prefix="/api/v1/admin/users", tags=["Admin Users"])
+app.include_router(admin_feedbacks_router.router, prefix="/api/v1/admin/feedbacks", tags=["Admin Feedbacks"])
+app.include_router(admin_plans_router.router, prefix="/api/v1/admin/plans", tags=["Admin Plans"])
+app.include_router(admin_subscriptions_router.router, prefix="/api/v1/admin/subscriptions", tags=["Admin Subscriptions"])
+app.include_router(admin_payments_router.router, prefix="/api/v1/admin/payments", tags=["Admin Payments"])
+app.include_router(admin_quota_router.router, prefix="/api/v1/admin/quota", tags=["Admin Usage Quota"])
+app.include_router(admin_dashboard_router.router, prefix="/api/v1/admin/dashboard", tags=["Admin Dashboard"])
 
 # Exception handlers
 app.add_exception_handler(StarletteHTTPException, http_exception_handler)
