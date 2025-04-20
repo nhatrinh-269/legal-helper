@@ -109,7 +109,7 @@ async def user_payment(request: Request):
 async def user_subscription(request: Request):
     return templates.TemplateResponse("user/subscription.html", {"request": request})
 
-@app.get("/user/information", response_class=HTMLResponse)
+@app.get("/user/user_information", response_class=HTMLResponse)
 async def user_info(request: Request):
     return templates.TemplateResponse("user/user_information.html", {"request": request})
 
