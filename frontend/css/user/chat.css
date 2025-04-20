@@ -79,6 +79,7 @@ body, html {
 }
 
 .chat-session {
+  display: flex;
   padding: 0.75rem;
   margin-bottom: 0.5rem;
   background: var(--bg-light);
@@ -279,4 +280,32 @@ body, html {
   .chat-panel {
     width: 100%;
   }
+}
+
+.chat-title-row {
+  display: flex;
+  justify-content: space-between; /* 👈 để title và icon cách xa nhau */
+  align-items: center;
+  width: 100%;
+}
+
+.chat-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: red;
 }

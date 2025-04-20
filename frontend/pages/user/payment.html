@@ -4,59 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thanh toán gói dịch vụ</title>
-  <link rel="stylesheet" href="../../css/theme.css" />
-  <link rel="stylesheet" href="../../css/user/payment.css" />
+  <link rel="stylesheet" href="../../css/user/payment.css?v=1" />
 </head>
 <body>
   <div class="payment-layout fade-in">
     <h1 class="title">Thông tin thanh toán</h1>
 
-    <div class="payment-wrapper">
-      <div class="payment-info">
-        <h3 class="package-title">Gói dịch vụ: Pro</h3>
-        <ul>
-          <li>✔ 50 câu hỏi/ngày</li>
-          <li>✔ Trả lời chính xác hơn</li>
-          <li>✔ Hỗ trợ email 24h</li>
-        </ul>
-        <p class="price">99.000đ/tháng</p>
-      </div>
-
-      <div class="payment-method">
-        <h3>Chọn phương thức thanh toán</h3>
-        <div class="payment-options">
-          <div class="payment-option">
-            <img src="../../assets/MoMo.png" alt="Momo" />
-            <span>Momo</span>
-          </div>
-          <div class="payment-option">
-            <img src="../../assets/vnpay.webp" alt="VNPAY" />
-            <span>VNPAY</span>
-          </div>
-          <div class="payment-option">
-            <img src="../../assets/paypal.webp" alt="PayPal" />
-            <span>PayPal</span>
-          </div>
-          <div class="payment-option">
-            <img src="../../assets/stripe.jpeg" alt="Stripe" />
-            <span>Stripe</span>
-          </div>
-        </div>
-      </div>
+    <div id="paymentInfo" class="payment-wrapper">
+      <!-- JS sẽ đổ nội dung gói và phương thức tại đây -->
     </div>
 
     <div class="actions">
-      <a href="subscription.html" class="btn btn-secondary">Quay lại</a>
-      <button class="btn btn-primary">Thanh toán</button>
+      <a href="subscription" class="btn btn-secondary">Quay lại</a>
+      <button id="payBtn" class="btn btn-primary">Thanh toán</button>
     </div>
   </div>
 
-  <script>
-    // Giả lập thanh toán và chuyển hướng
-    document.querySelector('.btn-primary').addEventListener('click', function () {
-      alert('Thanh toán thành công!');
-      window.location.href = "chat.html";  // Chuyển hướng đến trang chat sau khi thanh toán thành công
-    });
-  </script>
+  <script src="../../js/user/payment.js?v=1"></script>
 </body>
 </html>

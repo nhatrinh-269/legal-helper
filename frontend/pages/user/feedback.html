@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Feedback - Legal Helper</title>
-  <link rel="stylesheet" href="../../css/theme.css" />
-  <link rel="stylesheet" href="../../css/user/feedback.css" />
+  <link rel="stylesheet" href="../../css/user/feedback.css?v=1" />
 </head>
 <body>
   <div class="feedback-layout fade-in">
@@ -22,33 +21,17 @@
 
     <!-- Lịch sử phản hồi -->
     <div class="feedback-history">
-      <h3>Lịch sử phản hồi</h3>
-      <div class="feedback-item">
-        <p><strong>20/04/2025:</strong> Tôi rất hài lòng với dịch vụ của các bạn. Mong muốn được hỗ trợ nhiều hơn về các thủ tục pháp lý.</p>
+      <div class="feedback-title">
+        <h3>Lịch sử phản hồi</h3>
       </div>
-      <div class="feedback-item">
-        <p><strong>19/04/2025:</strong> Hệ thống rất hữu ích nhưng cần cải thiện thời gian phản hồi nhanh hơn.</p>
-      </div>
+      <!-- feedback-item sẽ được thêm bằng JS -->
     </div>
 
     <div class="actions">
-      <a href="chat.html" class="btn btn-secondary">Quay lại</a>
+      <a href="chat" class="btn btn-secondary">Quay lại</a>
     </div>
   </div>
 
-  <script>
-    document.getElementById("feedbackForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const feedbackText = document.getElementById("feedbackInput").value.trim();
-      if (!feedbackText) return;
-
-      const feedbackItem = document.createElement("div");
-      feedbackItem.classList.add("feedback-item");
-      feedbackItem.innerHTML = `<p><strong>Ngày hiện tại:</strong> ${feedbackText}</p>`;
-      document.querySelector(".feedback-history").appendChild(feedbackItem);
-
-      document.getElementById("feedbackInput").value = "";
-    });
-  </script>
+  <script src="../../js/user/feedback.js"></script>
 </body>
 </html>
