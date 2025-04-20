@@ -4,16 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legal Helper - Chat</title>
-  <link rel="stylesheet" href="../../css/user/chat.css" />
-  <style>
-    .fade-in {
-      animation: fadeInPage 0.8s ease-in-out;
-    }
-    @keyframes fadeInPage {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  <link rel="stylesheet" href="../../css/user/chat.css?v=1" />
 </head>
 <body class="fade-in">
   <div class="container">
@@ -26,15 +17,8 @@
         </div>
         <input type="text" class="search-bar" placeholder="Tìm kiếm cuộc trò chuyện..." />
       </div>
-      <div class="chat-history">
-        <div class="chat-session active">
-          <div class="chat-title">Ly hôn</div>
-          <div class="chat-preview">"Tôi muốn hỏi về thủ tục ly hôn..."</div>
-        </div>
-        <div class="chat-session">
-          <div class="chat-title">Hợp đồng nhà</div>
-          <div class="chat-preview">"Có cần công chứng khi thuê nhà không?"</div>
-        </div>
+      <div class="chat-history" id="chatHistoryList">
+        <!-- Danh sách lịch sử chat -->
       </div>
       <div class="sidebar-footer">
         <a href="../user/feedback" class="btn btn-outline">Phản hồi</a>
@@ -52,12 +36,7 @@
           <h3>Chat với Legal Helper</h3>
         </div>
       </div>
-      <div class="chat-window" id="chatWindow">
-        <div class="message bot">
-          <div>Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?</div>
-          <div class="message-time">09:00</div>
-        </div>
-      </div>
+      <div class="chat-window" id="chatWindow"></div>
       <div class="chat-input-area">
         <textarea id="chatInput" class="chat-input" placeholder="Nhập câu hỏi..." rows="1"></textarea>
         <button id="sendBtn" class="send-btn">Gửi</button>
@@ -65,6 +44,6 @@
     </section>
   </div>
 
-  <script src="../../js/user/chat.js"></script>
+  <script src="../../js/user/chat.js?v=1"></script>
 </body>
 </html>
