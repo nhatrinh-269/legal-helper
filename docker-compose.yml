@@ -1,0 +1,48 @@
+services:
+  legalhelperdb:
+    build: 
+      context: ../legal-helper-db
+      dockerfile: Dockerfile
+    container_name: legalhelperdb 
+    restart: always
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database:/var/lib/mysql
+    networks:
+      - legalhelper-network  
+
+  legalhelper:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: legalhelper
+    restart: always
+    depends_on:
+      - legalhelperdb
+    ports:
+      - "8000:8000"
+    networks:
+      - legalhelper-network
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ALGORITHM: ${JWT_ALGORITHM}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+    env_file:
+      - .env 
+      
+networks:
+  legalhelper-network:
+    driver: bridge

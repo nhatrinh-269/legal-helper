@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, ForeignKey, Date, UniqueConstraint
-from backend.models.Base import Base
+from models.Base import Base
 
 class UsageQuota(Base):
     __tablename__ = "UsageQuota"

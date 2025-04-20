@@ -1,8 +1,6 @@
 import os
-from pydantic import BaseSettings, Field
-from dotenv import load_dotenv
-
-load_dotenv()
+from pydantic_settings import BaseSettings
+from pydantic import Field
 
 class Settings(BaseSettings):
     # Project
@@ -23,7 +21,7 @@ class Settings(BaseSettings):
 
     # JWT
     SECRET_KEY: str = Field(..., env="SECRET_KEY")
-    JWT_ALGORITHM: str = "HS256"
+    JWT_ALGORITHM: str = Field("HS256", env="JWT_ALGORITHM")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
 
     # Gemini
@@ -36,5 +34,8 @@ class Settings(BaseSettings):
             "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
             "headers": {"Content-Type": "application/json"}
         }
+
+    class Config:
+        env_file = ".env"  # auto-load từ .env nếu chạy local
 
 settings = Settings()

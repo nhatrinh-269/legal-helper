@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, DECIMAL
-from backend.models.Base import Base
+from models.Base import Base
 
 class ServicePackage(Base):
     __tablename__ = "ServicePackages"

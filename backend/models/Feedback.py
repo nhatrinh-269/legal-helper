@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, ForeignKey, Text, DateTime
-from backend.models.Base import Base
+from models.Base import Base
 from datetime import datetime
 
 class Feedback(Base):

@@ -4,8 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from ..main import app
-from backend.database.connection import get_db
-from backend.models.Base import Base
+from database.connection import get_db
+from models.Base import Base
 
 # Sử dụng SQLite để test (hoặc dùng MySQL test DB riêng)
 TEST_DATABASE_URL = "sqlite:///./test.db"

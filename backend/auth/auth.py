@@ -1,8 +1,8 @@
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from backend.database.connection import get_db
-from backend.models.User import User
-from backend.auth.password import verify_password
+from database.connection import get_db
+from models.User import User
+from auth.password import verify_password
 
 def authenticate_user(email: str, password: str, db: Session) -> User:
     user = db.query(User).filter(User.email == email).first()

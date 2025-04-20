@@ -1,5 +1,5 @@
 import httpx
-from backend.core.config import settings
+from core.config import settings
 
 async def send_question_to_gemini(question: str, user_id: int) -> str:
     headers = {

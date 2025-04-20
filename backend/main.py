@@ -1,13 +1,16 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from fastapi.exceptions import RequestValidationError
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 from core.config import settings
 from utils.exceptions import http_exception_handler, unhandled_exception_handler
 
 # Import router modules
 from api.routers import auth as auth_router
+
 from api.routers.user import (
     chat as user_chat_router,
     feedback as user_feedback_router,
@@ -67,7 +70,82 @@ app.include_router(admin_dashboard_router.router, prefix="/api/v1/admin", tags=[
 app.add_exception_handler(StarletteHTTPException, http_exception_handler)
 app.add_exception_handler(Exception, unhandled_exception_handler)
 
-# Root route (optional)
-@app.get("/")
-def read_root():
-    return {"message": f"{settings.PROJECT_NAME} is running 🚀"}
+# Mount thư mục static
+app.mount("/static", StaticFiles(directory="frontend/css"), name="css")
+app.mount("/js", StaticFiles(directory="frontend/js"), name="js")
+app.mount("/assets", StaticFiles(directory="frontend/assets"), name="assets")
+
+# Thiết lập templates
+templates = Jinja2Templates(directory="frontend/pages")
+
+# Root
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+# Auth
+@app.get("/login", response_class=HTMLResponse)
+async def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@app.get("/register", response_class=HTMLResponse)
+async def register_page(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
+
+# User pages
+@app.get("/user/chat", response_class=HTMLResponse)
+async def user_chat(request: Request):
+    return templates.TemplateResponse("user/chat.html", {"request": request})
+
+@app.get("/user/feedback", response_class=HTMLResponse)
+async def user_feedback(request: Request):
+    return templates.TemplateResponse("user/feedback.html", {"request": request})
+
+@app.get("/user/payment", response_class=HTMLResponse)
+async def user_payment(request: Request):
+    return templates.TemplateResponse("user/payment.html", {"request": request})
+
+@app.get("/user/subscription", response_class=HTMLResponse)
+async def user_subscription(request: Request):
+    return templates.TemplateResponse("user/subscription.html", {"request": request})
+
+@app.get("/user/information", response_class=HTMLResponse)
+async def user_info(request: Request):
+    return templates.TemplateResponse("user/user_information.html", {"request": request})
+
+# Admin pages
+@app.get("/admin/dashboard", response_class=HTMLResponse)
+async def admin_dashboard(request: Request):
+    return templates.TemplateResponse("admin/dasboard.html", {"request": request})
+
+@app.get("/admin/users", response_class=HTMLResponse)
+async def admin_users(request: Request):
+    return templates.TemplateResponse("admin/users.html", {"request": request})
+
+@app.get("/admin/feedbacks", response_class=HTMLResponse)
+async def admin_feedbacks(request: Request):
+    return templates.TemplateResponse("admin/feedbacks.html", {"request": request})
+
+@app.get("/admin/chats", response_class=HTMLResponse)
+async def admin_chats(request: Request):
+    return templates.TemplateResponse("admin/chats.html", {"request": request})
+
+@app.get("/admin/plans", response_class=HTMLResponse)
+async def admin_plans(request: Request):
+    return templates.TemplateResponse("admin/plans.html", {"request": request})
+
+@app.get("/admin/subscriptions", response_class=HTMLResponse)
+async def admin_subscriptions(request: Request):
+    return templates.TemplateResponse("admin/subscriptions.html", {"request": request})
+
+@app.get("/admin/payments", response_class=HTMLResponse)
+async def admin_payments(request: Request):
+    return templates.TemplateResponse("admin/payments.html", {"request": request})
+
+@app.get("/admin/usagequota", response_class=HTMLResponse)
+async def admin_usage_quota(request: Request):
+    return templates.TemplateResponse("admin/usagequota.html", {"request": request})
+
+@app.get("/admin/settings", response_class=HTMLResponse)
+async def admin_settings(request: Request):
+    return templates.TemplateResponse("admin/settings.html", {"request": request})

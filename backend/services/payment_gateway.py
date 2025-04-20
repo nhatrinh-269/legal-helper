@@ -1,9 +1,9 @@
 from datetime import datetime
 from enum import Enum
-from backend.models.Payments import PaymentStatus, PaymentMethod
+from models.Payments import PaymentStatus, PaymentMethod
 from sqlalchemy.orm import Session
-from backend.models.Payments import Payment
-from backend.core.config import settings
+from models.Payments import Payment
+from core.config import settings
 
 # Hàm giả lập thanh toán (mock)
 def process_payment(db: Session, user_id: int, amount: float, method: PaymentMethod, package_id: int = None) -> Payment:
