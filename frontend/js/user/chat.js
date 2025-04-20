@@ -35,23 +35,38 @@ async function sendMessage() {
   chatInput.value = "";
   chatInput.style.height = "auto";
 
-  // Gửi câu hỏi đến Gemini
+  // ===== ✅ Lấy 5 câu hỏi gần nhất của người dùng
+  const recentQuestions = messages
+    .filter(msg => msg.role === "user")
+    .slice(-5)
+    .map((msg, idx) => `${idx + 1}. ${msg.text}`)
+    .join("\n");
+
+  // ===== ✅ Tạo prompt cho Gemini
+  const prompt = `Dưới đây là 5 câu hỏi gần nhất:\n${recentQuestions}\n\nVà đây là câu hỏi hiện tại:\n${text}. 
+                ban hay dua vao nhung cau hoi tren de tra loi cho toi. 
+                Neu khong biet thi tra loi la khong biet. Neu cau tra loi co nhieu phan thi phan`;
+
+  // ===== ✅ Gửi đến Gemini
   const res = await fetch(`${API}/askllms`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_id: userId, question: text })
+    body: JSON.stringify({ user_id: userId, question: prompt })
   });
-  
+
   const data = await res.json();
-  
+
   if (res.status !== 200) {
     appendMessage("bot", data.detail || "Lỗi hệ thống");
     return;
   }
+
   appendMessage("bot", data.answer);
 
-  // Lưu đoạn chat (POST hoặc PUT)
+  // ===== ✅ Cập nhật vào message local
   messages.push({ role: "user", text }, { role: "bot", text: data.answer });
+
+  // ===== ✅ Lưu đoạn chat
   if (currentChatId) {
     await fetch(`${API}/update/${currentChatId}`, {
       method: "PUT",
@@ -104,7 +119,6 @@ async function loadChatHistory() {
         <button class="delete-btn" data-id="${chat.id}">🗑</button>
       </div>
     `;
-
 
     div.addEventListener("click", () => loadChat(chat));
     div.querySelector(".delete-btn").addEventListener("click", e => {

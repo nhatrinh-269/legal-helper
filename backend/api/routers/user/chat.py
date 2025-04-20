@@ -59,7 +59,7 @@ def list_chats(user_id: int, db: Session = Depends(get_db)):
         {
             "id": c.chat_id,
             "user_id": c.user_id,
-            "title": c.message_content[0]['text'][:10] if c.message_content else "No Title",
+            "title": c.message_content[0]['text'][:20] if c.message_content else "No Title",
             "message_content": c.message_content,
             "timestamp": c.timestamp
         }
