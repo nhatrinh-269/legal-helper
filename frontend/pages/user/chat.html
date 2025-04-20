@@ -5,82 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legal Helper - Chat</title>
   <link rel="stylesheet" href="../../css/user/chat.css" />
+  <style>
+    .fade-in {
+      animation: fadeInPage 0.8s ease-in-out;
+    }
+    @keyframes fadeInPage {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-<body>
-  <div class="chat-layout">
+<body class="fade-in">
+  <div class="container">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <!-- Nút tạo cuộc trò chuyện mới -->
-      <footer>
-        <button class="service-btn" onclick="location.href='chat.html'">Tạo cuộc trò chuyện mới</button>
-      </footer>
-
-      <header class="sidebar-header">
-        <h2>Lịch sử</h2>
+      <div class="sidebar-header">
+        <div class="sidebar-title">
+          <h2>Legal Helper</h2>
+          <span id="newChatBtn" class="settings">💬</span>
+        </div>
         <input type="text" class="search-bar" placeholder="Tìm kiếm cuộc trò chuyện..." />
-      </header>
-      
+      </div>
       <div class="chat-history">
-        <div class="chat-session">
-          <div class="chat-title">🗓 20/04/2025 - Ly hôn</div>
+        <div class="chat-session active">
+          <div class="chat-title">Ly hôn</div>
           <div class="chat-preview">"Tôi muốn hỏi về thủ tục ly hôn..."</div>
         </div>
         <div class="chat-session">
-          <div class="chat-title">🗓 19/04/2025 - Hợp đồng nhà</div>
+          <div class="chat-title">Hợp đồng nhà</div>
           <div class="chat-preview">"Có cần công chứng khi thuê nhà không?"</div>
         </div>
       </div>
-
-      <footer>
-        <button class="service-btn" onclick="location.href='../user/feedback.html'">Phản hồi</button>
-      </footer>
-
-      <footer>
-        <button class="service-btn" onclick="location.href='../user/subscription.html'">Xem các gói dịch vụ</button>
-      </footer>
+      <div class="sidebar-footer">
+        <a href="../user/feedback.html" class="btn btn-outline">Phản hồi</a>
+        <a href="../user/subscription.html" class="btn btn-primary">Gói dịch vụ</a>
+      </div>
     </aside>
 
-    <!-- Chat Panel -->
-    <main class="chat-panel">
-      <section class="chat-window" id="chatWindow">
-        <a href="user_information.html" class="chat-avatar">
-          <img src="../../assets/legal_img.jpg" alt="avatar" />
-        </a>
-
-        <div class="message ai">
-          <div class="bubble">Tôi là chatbot Legal Helper. Bạn cần hỗ trợ gì?</div>
+    <!-- Chat panel -->
+    <section class="chat-panel">
+      <div class="chat-header">
+        <div class="header-left">
+          <a href="user_information.html">
+            <img src="../../assets/legal_img.jpg" alt="Avatar" class="bot-avatar" />
+          </a>
+          <h3>Chat với Legal Helper</h3>
         </div>
-      </section>
-
-      <form id="chatForm" class="chat-input">
-        <textarea id="chatInput" placeholder="Nhập câu hỏi của bạn..." required></textarea>
-        <button type="submit">Gửi</button>
-      </form>
-    </main>
+      </div>
+      <div class="chat-window" id="chatWindow">
+        <div class="message bot">
+          <div>Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?</div>
+          <div class="message-time">09:00</div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <textarea id="chatInput" class="chat-input" placeholder="Nhập câu hỏi..." rows="1"></textarea>
+        <button id="sendBtn" class="send-btn">Gửi</button>
+      </div>
+    </section>
   </div>
 
   <script>
-    const form = document.getElementById("chatForm");
-    const input = document.getElementById("chatInput");
-    const windowEl = document.getElementById("chatWindow");
+    const chatWindow = document.getElementById('chatWindow');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const newChatBtn = document.getElementById('newChatBtn');
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const text = input.value.trim();
+    sendBtn.addEventListener('click', () => submitMessage());
+    chatInput.addEventListener('input', () => {
+      chatInput.style.height = 'auto';
+      chatInput.style.height = chatInput.scrollHeight + 'px';
+    });
+    chatInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        submitMessage();
+      }
+    });
+
+    function submitMessage() {
+      const text = chatInput.value.trim();
       if (!text) return;
 
-      const msg = document.createElement("div");
-      msg.className = "message user";
-      msg.innerHTML = `<div class="bubble">${text}</div>`;
-      windowEl.appendChild(msg);
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user animated';
+      userMsg.innerHTML = `<div>${text}</div><div class="message-time">${new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</div>`;
+      chatWindow.appendChild(userMsg);
 
-      const reply = document.createElement("div");
-      reply.className = "message ai";
-      reply.innerHTML = `<div class="bubble">Đang xử lý câu hỏi...</div>`;
-      windowEl.appendChild(reply);
+      const botMsg = document.createElement('div');
+      botMsg.className = 'message bot animated';
+      botMsg.innerHTML = `<div>Đang xử lý câu hỏi...</div>`;
+      chatWindow.appendChild(botMsg);
 
-      input.value = "";
-      windowEl.scrollTop = windowEl.scrollHeight;
+      chatInput.value = '';
+      chatInput.style.height = 'auto';
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    newChatBtn.addEventListener('click', () => {
+      chatWindow.innerHTML = '';
+      const welcome = document.createElement('div');
+      welcome.className = 'message bot animated';
+      welcome.innerHTML = `
+        <div>Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?</div>
+        <div class="message-time">${new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</div>
+      `;
+      chatWindow.appendChild(welcome);
+      chatInput.value = '';
+      chatInput.style.height = 'auto';
+      chatInput.focus();
     });
   </script>
 </body>

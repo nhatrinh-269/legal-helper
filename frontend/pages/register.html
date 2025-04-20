@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Đăng ký - Legal Helper</title>
-  <link rel="stylesheet" href="../css/register.css" />
+  <link rel="stylesheet" href="../css/register.css?v=3" />
 </head>
 <body>
   <div class="register-page fade-in">
@@ -26,18 +26,13 @@
 
         <div class="bottom-link fade-in-delayed">
           <span>Đã có tài khoản?</span>
-          <a href="login.html">Đăng nhập</a>
+          <a href="login">Đăng nhập</a>
         </div>
       </div>
     </div>
   </div>
 
-  <script>
-    document.getElementById("registerForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("Đăng ký thành công!");
-      window.location.href = "login.html";
-    });
-  </script>
+  <script src="../js/register.js?v=3"></script>
+
 </body>
 </html>
