@@ -1,7 +1,7 @@
 from fastapi import Request, HTTPException
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_400_BAD_REQUEST, HTTP_401_UNAUTHORIZED, HTTP_404_NOT_FOUND
-from utils.logger import logger
+from backend.utils.logger import logger
 
 # Custom exception (ví dụ)
 class NotFoundException(HTTPException):

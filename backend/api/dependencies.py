@@ -1,10 +1,10 @@
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from database.connection import get_db
-from models.User import User
-from auth.auth import authenticate_user  # nếu chỉ dùng email/password
+from backend.database.connection import get_db
+from backend.models.User import User
+from backend.auth.auth import authenticate_user  # nếu chỉ dùng email/password
 # from auth.auth import get_current_user  # nếu dùng JWT
-from models.User import UserRole
+from backend.models.User import UserRole
 
 # Dependency: Lấy session DB
 def get_db_session():

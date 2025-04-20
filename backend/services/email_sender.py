@@ -1,6 +1,6 @@
 import smtplib
 from email.message import EmailMessage
-from core.config import settings
+from backend.core.config import settings
 
 def send_email(to_email: str, subject: str, body: str):
     try:

@@ -1,4 +1,4 @@
-from auth.password import hash_password, verify_password
+from backend.auth.password import hash_password, verify_password
 
 def test_password_hash_and_verify():
     raw = "123456"

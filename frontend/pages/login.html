@@ -39,18 +39,7 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      document.querySelector(".form-wrapper").classList.add("fade-out");
-      setTimeout(() => {
-        window.location.href = "user/chat.html";
-      }, 500);
-    });
+  <script src="../js/login.js"></script>
 
-    function oauthLogin(provider) {
-      alert(`Chuyển sang đăng nhập với ${provider}`);
-    }
-  </script>
 </body>
 </html>
