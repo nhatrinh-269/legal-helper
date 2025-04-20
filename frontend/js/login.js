@@ -2,6 +2,10 @@
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
   e.preventDefault();
 
+  // 1️⃣ Xoá toàn bộ dữ liệu cũ trước khi login
+  localStorage.clear();
+
+  // 2️⃣ Lấy giá trị form
   const email = e.target.email.value.trim();
   const password = e.target.password.value;
 
@@ -23,10 +27,10 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     const data = await res.json();
     console.log("✅ Login success:", data);
 
-    // Lưu thông tin user (có thể là token sau này)
+    // 3️⃣ Lưu thông tin mới (user hoặc token)
     localStorage.setItem("user", JSON.stringify(data));
 
-    // Animation rời đi trước khi chuyển trang
+    // 4️⃣ Hiệu ứng rồi chuyển trang
     document.querySelector(".form-wrapper").classList.add("fade-out");
     setTimeout(() => {
       window.location.href = "user/chat";

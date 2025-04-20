@@ -38,7 +38,7 @@ async function fetchPlans() {
   }
   
   function goToPayment(packageId) {
-    window.location.href = `payment`;
+    window.location.href = `payment?package_id=${packageId}`;
   }
   
   fetchPlans();
