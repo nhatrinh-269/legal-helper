@@ -9,7 +9,7 @@ from models.UsageQuota import UsageQuota
 
 async def askllms(question: str, user_id: int, db: Session) -> str:
     # 1. Kiểm tra quota hôm nay của user
-    quota = db.query(UsageQuota).filter_by(user_id=user_id, usage_date=date.today()).first()
+    quota = db.query(UsageQuota).filter_by(user_id=user_id).first()
 
     if not quota:
         raise HTTPException(status_code=403, detail="Bạn chưa được cấp quota sử dụng hôm nay.")

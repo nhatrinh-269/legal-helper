@@ -20,13 +20,13 @@ async function fetchPlans() {
         card.className = "plan-card pop-in" + (plan.is_highlight ? " highlight" : "");
   
         card.innerHTML = `
-          <h3>${plan.package_name}</h3>
-          <ul>
-            ${plan.features.map(f => `<li>✔ ${f}</li>`).join("")}
-          </ul>
-          <p class="price">${plan.price === 0 ? "0đ" : plan.price.toLocaleString("vi-VN") + "đ/tháng"}</p>
-          <button onclick="goToPayment(${plan.package_id})" class="btn btn-primary">Chọn gói</button>
-        `;
+        <h3>${plan.package_name}</h3>
+        <ul>
+          ${plan.features.map(f => `<li>✔ ${f}</li>`).join("")}
+        </ul>
+        <p class="price">${plan.price === 0 ? "0đ" : plan.price.toLocaleString("vi-VN") + "đ/tháng"}</p>
+        ${plan.package_name === "Free" ? "" : `<button onclick="goToPayment(${plan.package_id})" class="btn btn-primary">Chọn gói</button>`}
+      `;      
   
         container.appendChild(card);
       });
