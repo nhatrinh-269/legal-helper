@@ -22,7 +22,6 @@
     min-height: 100vh;
   }
   
-  /* Sidebar */
   .sidebar {
     width: 260px;
     background: var(--white);
@@ -54,7 +53,7 @@
     color: white;
   }
   
-  /* Content */
+  /* Main content */
   .content {
     flex: 1;
     padding: 40px;
@@ -69,8 +68,7 @@
     margin-bottom: 30px;
   }
   
-  /* Table */
-  .payments-table {
+  .quota-table {
     width: 100%;
     border-collapse: collapse;
     background: var(--white);
@@ -79,8 +77,8 @@
     overflow: hidden;
   }
   
-  .payments-table th,
-  .payments-table td {
+  .quota-table th,
+  .quota-table td {
     padding: 12px 16px;
     border-bottom: 1px solid var(--border);
     font-size: 0.95rem;
@@ -88,33 +86,28 @@
     color: var(--text);
   }
   
-  .payments-table thead {
+  .quota-table thead {
     background: var(--primary);
     color: white;
   }
   
-  .payments-table tbody tr:hover {
+  .quota-table tbody tr:hover {
     background-color: #f1f3f5;
   }
   
-  .payments-table td.actions {
-    display: flex;
-    gap: 8px;
+  /* Bar hiển thị phần trăm */
+  .progress-container {
+    background: #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 12px;
+    width: 100%;
   }
   
-  .btn-view {
-    background: #3498db;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .btn-view:hover {
-    opacity: 0.9;
+  .progress-bar {
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.4s ease;
   }
   
   /* Animation */
@@ -133,7 +126,7 @@
       padding: 20px;
     }
   
-    .payments-table {
+    .quota-table {
       font-size: 0.85rem;
     }
   }

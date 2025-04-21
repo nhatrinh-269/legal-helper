@@ -142,9 +142,9 @@ async def admin_subscriptions(request: Request):
 async def admin_payments(request: Request):
     return templates.TemplateResponse("admin/payments.html", {"request": request})
 
-@app.get("/admin/usagequota", response_class=HTMLResponse)
+@app.get("/admin/quota", response_class=HTMLResponse)
 async def admin_usage_quota(request: Request):
-    return templates.TemplateResponse("admin/usagequota.html", {"request": request})
+    return templates.TemplateResponse("admin/quota.html", {"request": request})
 
 @app.get("/admin/settings", response_class=HTMLResponse)
 async def admin_settings(request: Request):

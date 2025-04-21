@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quản lý người dùng - Admin</title>
+  <link rel="stylesheet" href="../../css/admin/users.css?v=9" />
+</head>
+<body class="fade-in">
+  <div class="admin-dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">Legal Helper</div>
+      <nav>
+        <a href="dashboard">📊 Tổng quan</a>
+        <a href="users" class="active">👤 Người dùng</a>
+        <a href="feedbacks">💬 Phản hồi</a>
+        <a href="plans">📦 Gói dịch vụ</a>
+        <a href="payments">💳 Thanh toán</a>
+        <a href="subscriptions">📄 Subscriptions</a>
+        <a href="quota">📈 Quota</a>
+        <a href="settings">⚙️ Cài đặt</a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="content">
+      <div class="header">
+        <h1>Danh sách người dùng</h1>
+        <div class="filters">
+          <select id="roleFilter">
+            <option value="">Tất cả vai trò</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+          </select>
+          <select id="statusFilter">
+            <option value="">Tất cả trạng thái</option>
+            <option value="active">Đang hoạt động</option>
+            <option value="inactive">Ngưng hoạt động</option>
+            <option value="banned">Bị khóa</option>
+          </select>
+        </div>
+      </div>
+
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Vai trò</th>
+            <th>Trạng thái</th>
+            <th>Đăng ký</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody">
+          <!-- JS sẽ render dữ liệu -->
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <script src="/js/admin/users.js?v=6"></script>
+</body>
+</html>
