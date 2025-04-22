@@ -1,0 +1,136 @@
+:root {
+    --primary: #6c63ff;
+    --primary-dark: #4b45c4;
+    --text: #111827;
+    --bg: #f7f8fa;
+    --white: #ffffff;
+    --border: #e2e2e5;
+    --muted: #6b7280;
+    --danger: #e74c3c;
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+  }
+  
+  .admin-dashboard {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    width: 260px;
+    background: var(--white);
+    padding: 20px;
+    border-right: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 30px;
+  }
+  
+  .sidebar nav a {
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: var(--radius);
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar nav a:hover,
+  .sidebar nav a.active {
+    background: var(--primary);
+    color: white;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 40px;
+    background: var(--bg);
+    animation: fadeIn 0.8s ease;
+  }
+  
+  .content h1 {
+    font-size: 1.8rem;
+    color: var(--text);
+    margin-bottom: 30px;
+  }
+  
+  .settings-form {
+    max-width: 600px;
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .settings-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  
+  .settings-form input {
+    margin-top: 6px;
+    padding: 10px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: var(--primary-dark);
+  }
+  
+  /* Animation */
+  .fade-in {
+    animation: fadeIn 0.8s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .content {
+      padding: 20px;
+    }
+  
+    .settings-form {
+      padding: 20px;
+    }
+  }
+  

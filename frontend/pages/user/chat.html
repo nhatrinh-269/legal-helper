@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Helper - Chat</title>
+  <link rel="stylesheet" href="../../css/user/chat.css?v=1" />
+</head>
+<body class="fade-in">
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">
+          <h2>Legal Helper</h2>
+          <span id="newChatBtn" class="settings">💬</span>
+        </div>
+        <input type="text" class="search-bar" placeholder="Tìm kiếm cuộc trò chuyện..." />
+      </div>
+      <div class="chat-history" id="chatHistoryList">
+        <!-- Danh sách lịch sử chat -->
+      </div>
+      <div class="sidebar-footer">
+        <a href="../user/feedback" class="btn btn-outline">Phản hồi</a>
+        <a href="../user/subscription" class="btn btn-primary">Gói dịch vụ</a>
+      </div>
+    </aside>
+
+    <!-- Chat panel -->
+    <section class="chat-panel">
+      <div class="chat-header">
+        <div class="header-left">
+          <a href="user_information">
+            <img src="../../assets/legal_img.jpg" alt="Avatar" class="bot-avatar" />
+          </a>
+          <h3>Chat với Legal Helper</h3>
+        </div>
+      </div>
+      <div class="chat-window" id="chatWindow"></div>
+      <div class="chat-input-area">
+        <textarea id="chatInput" class="chat-input" placeholder="Nhập câu hỏi..." rows="1"></textarea>
+        <button id="sendBtn" class="send-btn">Gửi</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="../../js/user/chat.js?v=1"></script>
+</body>
+</html>

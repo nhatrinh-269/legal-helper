@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Legal Helper</title>
+  <link rel="stylesheet" href="../../css/admin/dasboard.css?v=6" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="fade-in">
+  <div class="admin-dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">Legal Helper</div>
+      <nav>
+        <a href="dashboard" class="active">📊 Tổng quan</a>
+        <a href="users">👤 Người dùng</a>
+        <a href="feedbacks">💬 Phản hồi</a>
+        <a href="plans">📦 Gói dịch vụ</a>
+        <a href="payments">💳 Thanh toán</a>
+        <a href="subscriptions">📄 Subscriptions</a>
+        <a href="quota">📈 Quota</a>
+        <a href="settings">⚙️ Cài đặt</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="dashboard-content">
+      <h1>Tổng quan hệ thống</h1>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card"><h3>Người dùng</h3><p id="totalUsers">...</p></div>
+        <div class="stat-card"><h3>Phản hồi</h3><p id="totalFeedbacks">...</p></div>
+        <div class="stat-card"><h3>Câu hỏi hôm nay</h3><p id="totalQuestions">...</p></div>
+        <div class="stat-card"><h3>Doanh thu tháng</h3><p id="monthlyRevenue">...</p></div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="chart-box">
+          <h3>Câu hỏi theo ngày</h3>
+          <canvas id="questionsChart"></canvas>
+        </div>
+        <div class="chart-box">
+          <h3>Doanh thu theo tháng</h3>
+          <canvas id="revenueChart"></canvas>
+        </div>
+        <div class="chart-box">
+          <h3>Phân bổ gói dịch vụ</h3>
+          <canvas id="packageChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Tables -->
+      <div class="tables">
+        <div class="table-box">
+          <h3>Phản hồi mới</h3>
+          <table id="feedbackTable">
+            <thead><tr><th>User</th><th>Nội dung</th><th>Thời gian</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="table-box">
+          <h3>Thanh toán gần đây</h3>
+          <table id="paymentTable">
+            <thead><tr><th>User</th><th>Số tiền</th><th>Phương thức</th><th>Thời gian</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="table-box">
+          <h3>Top người dùng (quota)</h3>
+          <table id="topQuotaTable">
+            <thead><tr><th>User</th><th>Số câu hỏi</th><th>Ngày</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="table-box">
+          <h3>Người dùng mới</h3>
+          <table id="newUsersTable">
+            <thead><tr><th>Họ tên</th><th>Email</th><th>Đăng ký</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary">📥 Xuất dữ liệu CSV</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../js/admin/dasboard.js?v=2"></script>
+</body>
+</html>

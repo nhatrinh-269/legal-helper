@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đăng nhập - Legal Helper</title>
+  <link rel="stylesheet" href="../css/login.css" />
+</head>
+<body>
+  <div class="login-page fade-in">
+    <div class="left-section slide-left">
+      <img src="../assets/legal_img.jpg" alt="Hình minh hoạ" class="illustration pop-in" />
+    </div>
+
+    <div class="right-section slide-up">
+      <div class="form-wrapper">
+        <h2 class="pop-in">Chào mừng bạn quay lại</h2>
+        <p class="fade-in-delayed">Đăng nhập để tiếp tục</p>
+
+        <form id="loginForm">
+          <input type="email" name="email" placeholder="Email" required />
+          <input type="password" name="password" placeholder="Mật khẩu" required />
+          <button type="submit" class="login-button">Đăng nhập</button>
+        </form>
+
+        <div class="bottom-link fade-in-delayed">
+          <span>Chưa có tài khoản?</span>
+          <a href="register">Đăng ký</a>
+        </div>
+
+        <p class="or">hoặc đăng nhập với</p>
+
+        <div class="oauth-icons">
+          <button onclick="oauthLogin('facebook')"><img src="../assets/Facebook.webp" alt="Facebook" /></button>
+          <button onclick="oauthLogin('google')"><img src="../assets/Google.webp" alt="Google" /></button>
+          <button onclick="oauthLogin('apple')"><img src="../assets/Apple.svg" alt="Apple" /></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/login.js"></script>
+
+</body>
+</html>
