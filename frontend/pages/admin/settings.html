@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cài đặt hệ thống - Admin</title>
+  <link rel="stylesheet" href="../../css/admin/settings.css?v=1" />
+</head>
+<body class="fade-in">
+  <div class="admin-dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">Legal Helper</div>
+      <nav>
+        <a href="dashboard">📊 Tổng quan</a>
+        <a href="users">👤 Người dùng</a>
+        <a href="feedbacks">💬 Phản hồi</a>
+        <a href="plans">📦 Gói dịch vụ</a>
+        <a href="payments">💳 Thanh toán</a>
+        <a href="subscriptions">📄 Subscriptions</a>
+        <a href="quota">📈 Quota</a>
+        <a href="settings" class="active">⚙️ Cài đặt</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="content">
+      <h1>Cài đặt hệ thống</h1>
+      <form id="settingsForm" class="settings-form">
+        <label>
+          API Key Gemini:
+          <input type="text" id="geminiApiKey" placeholder="Nhập GEMINI_API_KEY..." />
+        </label>
+
+        <label>
+          Cảnh báo quota (%):
+          <input type="number" id="quotaWarning" placeholder="Ví dụ: 80" />
+        </label>
+
+        <label>
+          Email hệ thống:
+          <input type="email" id="systemEmail" placeholder="admin@legalhelper.com" />
+        </label>
+
+        <label>
+          Đổi mật khẩu Admin:
+          <input type="password" id="adminPassword" placeholder="••••••••••••" />
+        </label>
+
+        <button type="submit" class="btn btn-primary">Lưu cài đặt</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="/js/admin/settings.js?v=1"></script>
+</body>
+</html>

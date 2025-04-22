@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quản lý phản hồi - Admin</title>
-  <link rel="stylesheet" href="../../css/admin/feedbacks.css?v=3" />
+  <title>Quota sử dụng - Admin</title>
+  <link rel="stylesheet" href="../../css/admin/quota.css?v=1" />
 </head>
 <body class="fade-in">
   <div class="admin-dashboard">
@@ -14,33 +14,35 @@
       <nav>
         <a href="dashboard">📊 Tổng quan</a>
         <a href="users">👤 Người dùng</a>
-        <a href="feedbacks" class="active">💬 Phản hồi</a>
+        <a href="feedbacks">💬 Phản hồi</a>
         <a href="plans">📦 Gói dịch vụ</a>
         <a href="payments">💳 Thanh toán</a>
         <a href="subscriptions">📄 Subscriptions</a>
-        <a href="quota">📈 Quota</a>
+        <a href="quota" class="active">📈 Quota</a>
         <a href="settings">⚙️ Cài đặt</a>
       </nav>
     </aside>
 
     <!-- Main content -->
     <main class="content">
-      <h1>Phản hồi từ người dùng</h1>
-      <table class="feedback-table">
+      <h1>Quota sử dụng theo ngày</h1>
+      <table class="quota-table">
         <thead>
           <tr>
             <th>Người dùng</th>
-            <th>Nội dung</th>
-            <th>Thời gian</th>
+            <th>Ngày</th>
+            <th>Đã dùng</th>
+            <th>Giới hạn</th>
+            <th>% Sử dụng</th>
           </tr>
         </thead>
-        <tbody id="feedbackTableBody">
-          <!-- Dữ liệu từ JS -->
+        <tbody id="quotaTableBody">
+          <!-- JS sẽ render dữ liệu -->
         </tbody>
       </table>
     </main>
   </div>
 
-  <script src="../../js/admin/feedbacks.js?v=3"></script>
+  <script src="../../js/admin/quota.js?v=2"></script>
 </body>
 </html>

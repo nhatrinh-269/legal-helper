@@ -19,7 +19,6 @@ from api.routers.user import (
     user_info as user_info_router
 )
 from api.routers.admin import (
-    chats as admin_chats_router,
     plans as admin_plans_router,
     users as admin_users_router,
     feedbacks as admin_feedbacks_router,
@@ -57,7 +56,6 @@ app.include_router(user_subscription_router.router, prefix="/api/v1/user/subscri
 app.include_router(user_info_router.router, prefix="/api/v1/user/info", tags=["User Info"])
 
 # Admin routes
-app.include_router(admin_chats_router.router, prefix="/api/v1/admin/chats", tags=["Admin Chats"])
 app.include_router(admin_users_router.router, prefix="/api/v1/admin/users", tags=["Admin Users"])
 app.include_router(admin_feedbacks_router.router, prefix="/api/v1/admin/feedbacks", tags=["Admin Feedbacks"])
 app.include_router(admin_plans_router.router, prefix="/api/v1/admin/plans", tags=["Admin Plans"])
@@ -142,9 +140,9 @@ async def admin_subscriptions(request: Request):
 async def admin_payments(request: Request):
     return templates.TemplateResponse("admin/payments.html", {"request": request})
 
-@app.get("/admin/usagequota", response_class=HTMLResponse)
+@app.get("/admin/quota", response_class=HTMLResponse)
 async def admin_usage_quota(request: Request):
-    return templates.TemplateResponse("admin/usagequota.html", {"request": request})
+    return templates.TemplateResponse("admin/quota.html", {"request": request})
 
 @app.get("/admin/settings", response_class=HTMLResponse)
 async def admin_settings(request: Request):

@@ -20,7 +20,7 @@ def get_user_info_by_id(user_id: int, db: Session = Depends(get_db)):
         join(ServicePackage, Subscription.package_id == ServicePackage.package_id).\
         filter(Subscription.user_id == user_id, Subscription.status == 'active').first()
 
-    quota = db.query(UsageQuota).filter_by(user_id=user_id, usage_date=date.today()).first()
+    quota = db.query(UsageQuota).filter_by(user_id=user_id).first()
 
     return {
         "full_name": user.full_name,

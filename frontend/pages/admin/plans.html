@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gói dịch vụ - Admin</title>
+  <link rel="stylesheet" href="../../css/admin/plans.css?v=1" />
+</head>
+<body class="fade-in">
+  <div class="admin-dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">Legal Helper</div>
+      <nav>
+        <a href="dashboard">📊 Tổng quan</a>
+        <a href="users">👤 Người dùng</a>
+        <a href="feedbacks">💬 Phản hồi</a>
+        <a href="plans" class="active">📦 Gói dịch vụ</a>
+        <a href="payments">💳 Thanh toán</a>
+        <a href="subscriptions">📄 Subscriptions</a>
+        <a href="quota">📈 Quota</a>
+        <a href="settings">⚙️ Cài đặt</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="content">
+      <div class="header">
+        <h1>Danh sách gói dịch vụ</h1>
+        <button class="btn btn-primary">+ Thêm gói</button>
+      </div>
+
+      <table class="plans-table">
+        <thead>
+          <tr>
+            <th>Tên gói</th>
+            <th>Mô tả</th>
+            <th>Giá (VNĐ)</th>
+            <th>Thời hạn (ngày)</th>
+            <th>Giới hạn câu hỏi/ngày</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="plansTableBody">
+          <!-- Dữ liệu render từ JS -->
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <script src="../../js/admin/plans.js?v=2"></script>
+</body>
+</html>
