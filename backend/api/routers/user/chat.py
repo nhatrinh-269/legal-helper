@@ -13,9 +13,14 @@ router = APIRouter()
 
 @router.post("/askllms", response_model=ChatResponse)
 async def ask_question(payload: ChatRequest, db: Session = Depends(get_db)):
-    answer = await askllms(payload.question, payload.user_id, db)
-    if not answer:
-        raise HTTPException(status_code=500, detail="Không nhận được phản hồi từ Gemini.")
+    histories = [h.dict() for h in payload.histories]
+    print(f"User ID: {payload.user_id}, Question: {payload.question}, Histories: {histories}")
+    answer = await askllms(
+        user_id=payload.user_id,
+        question=payload.question,
+        histories=histories,
+        db=db
+    )
     return ChatResponse(answer=answer)
 
 @router.post("/create", response_model=ChatItem)

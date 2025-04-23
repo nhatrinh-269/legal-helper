@@ -5,8 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-/database
-/legalhelperdb
+
 # Distribution / packaging
 .Python
 build/
@@ -172,3 +171,7 @@ cython_debug/
 .pypirc
 
 frontend/chat_history/
+
+
+/legalhelperdb
+/lh-neo4j-data

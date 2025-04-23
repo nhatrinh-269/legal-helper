@@ -1,11 +1,18 @@
-from pydantic import BaseModel
-from typing import List
+# backend/schemas/user/chat.py
+
+from enum import Enum
 from datetime import datetime
+from typing import List
+from pydantic import BaseModel
+
+class ChatHistoryItem(BaseModel):
+    role: str       # "user" hoặc "bot"
+    content: str
 
 class ChatRequest(BaseModel):
     user_id: int
     question: str
-
+    histories: List[ChatHistoryItem] = []
 
 class ChatResponse(BaseModel):
     answer: str
