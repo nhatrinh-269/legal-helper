@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quản lý phản hồi - Admin</title>
-  <link rel="stylesheet" href="../../css/admin/feedbacks.css?v=3" />
+  <link rel="stylesheet" href="../../css/admin/feedbacks.css?v=5" />
 </head>
 <body class="fade-in">
   <div class="admin-dashboard">
@@ -32,15 +32,35 @@
             <th>Người dùng</th>
             <th>Nội dung</th>
             <th>Thời gian</th>
+            <th>Trả lời</th>
+            <th>Hành động</th>
           </tr>
         </thead>
         <tbody id="feedbackTableBody">
-          <!-- Dữ liệu từ JS -->
+          <!-- JS sẽ đổ dữ liệu vào đây -->
         </tbody>
       </table>
     </main>
   </div>
 
-  <script src="../../js/admin/feedbacks.js?v=3"></script>
+  <!-- Modal Reply -->
+  <div id="replyModal" class="modal d-none">
+    <div class="modal-content">
+      <span id="closeModal" class="modal-close">&times;</span>
+      <h2>Trả lời phản hồi</h2>
+      <label>Email người dùng:</label>
+      <input type="text" id="modalUserEmail" readonly />
+      <label>Email admin:</label>
+      <input type="text" id="modalAdminEmail" value="admin@legalhelper.com" />
+      <label>Nội dung trả lời:</label>
+      <textarea id="modalReplyText" rows="5" placeholder="Nhập nội dung trả lời..."></textarea>
+      <div class="form-buttons">
+        <button id="modalSendBtn"   class="btn btn-primary">Gửi</button>
+        <button id="modalCancelBtn" class="btn btn-outline">Hủy</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/admin/feedbacks.js?v=5"></script>
 </body>
 </html>
