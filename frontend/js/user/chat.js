@@ -16,6 +16,25 @@ const newChatBtn      = document.getElementById("newChatBtn");
 const chatHistoryList = document.getElementById("chatHistoryList");
 const searchBar       = document.querySelector(".search-bar");
 
+// Toggle sidebar trên mobile
+// Toggle sidebar trên mobile
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
+menuBtn.onclick = () => sidebar.classList.toggle("open");
+
+// Đóng sidebar khi click ngoài
+document.addEventListener("click", (e) => {
+  // Nếu sidebar đang mở, và click không nằm trong sidebar, và không phải click lên menuBtn
+  if (
+    sidebar.classList.contains("open") &&
+    !sidebar.contains(e.target) &&
+    e.target !== menuBtn
+  ) {
+    sidebar.classList.remove("open");
+  }
+});
+
+
 // Dữ liệu local cache của tất cả chats
 let allChats = [];
 
