@@ -25,7 +25,7 @@ async function fetchPlans() {
           ${plan.features.map(f => `<li>✔ ${f}</li>`).join("")}
         </ul>
         <p class="price">${plan.price === 0 ? "0đ" : plan.price.toLocaleString("vi-VN") + "đ/tháng"}</p>
-        ${plan.package_name === "Free" ? "" : `<button onclick="goToPayment(${plan.package_id})" class="btn btn-primary">Chọn gói</button>`}
+        ${plan.package_name === "free" ? "" : `<button onclick="goToPayment(${plan.package_id})" class="btn btn-primary">Chọn gói</button>`}
       `;      
   
         container.appendChild(card);
