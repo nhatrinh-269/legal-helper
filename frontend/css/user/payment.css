@@ -1,185 +1,210 @@
 :root {
-    --primary: #6c63ff;
-    --primary-dark: #4b45c4;
-    --text-color: #212529;
-    --background: #f9f9fb;
-    --muted: #6c757d;
-    --light-gray: #e9ecef;
-    --danger: #e74c3c;
-    --radius: 12px;
-    --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  }
-  
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: var(--background);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .payment-layout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 1200px;
-    padding: 40px;
-    background: var(--background);
-    box-sizing: border-box;
-  }
-  
-  .title {
-    text-align: center;
-    font-size: 2rem;
-    color: var(--text-color);
-    margin-bottom: 30px;
-  }
-  
+  --primary: #6c63ff;
+  --primary-dark: #4b45c4;
+  --text-color: #212529;
+  --background: #f9f9fb;
+  --muted: #6c757d;
+  --light-gray: #e9ecef;
+  --danger: #e74c3c;
+  --radius: 12px;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--background);
+}
+
+/* Layout chính */
+.payment-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 40px;
+  margin: 0 auto;
+  background: var(--background);
+}
+
+/* Tiêu đề */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--text-color);
+  margin-bottom: 30px;
+}
+
+/* Wrapper hai khung thông tin */
+.payment-wrapper {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Các khung info và phương thức */
+.payment-info,
+.payment-method {
+  flex: 0 0 45%;
+  min-width: 300px;
+  background: #fff;
+  padding: 24px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Tiêu đề gói */
+.package-title {
+  font-size: 1.5rem;
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+}
+
+/* Danh sách tính năng */
+.payment-info ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+.payment-info .price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-dark);
+  margin-top: 16px;
+}
+
+/* Phần chọn phương thức */
+.payment-method h3 {
+  color: var(--primary-dark);
+  margin-bottom: 16px;
+}
+.payment-options {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 20px;
+}
+.payment-option {
+  background: var(--light-gray);
+  padding: 15px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.payment-option:hover {
+  background: var(--primary);
+}
+.payment-option img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+.payment-option span {
+  display: block;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* Button chung */
+.btn {
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease;
+  width: 100%;
+  display: inline-flex;         /* hoặc flex nếu bạn muốn block-level */
+  justify-content: center;      /* căn giữa ngang */
+  align-items: center;          /* căn giữa dọc */
+  text-align: center;           /* fallback cho inline-block */
+}
+
+/* Nút chính */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+/* Nút quay lại */
+.btn-secondary {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+.btn-secondary:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* --- Đoạn quan trọng: căn giữa 2 nút và tạo gap đều --- */
+.actions {
+  display: flex;
+  justify-content: center; /* Căn giữa cả nhóm nút */
+  align-items: center;
+  gap: 16px;               /* Khoảng cách giữa các nút */
+  width: 100%;
+  max-width: 600px;
+  margin-top: 40px;
+}
+
+/* Cho cả hai nút chia đều không gian (desktop) */
+.actions .btn {
+  flex: 1;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.8s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive trên mobile */
+@media (max-width: 768px) {
+  /* Xếp khung info & method dọc */
   .payment-wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    width: 100%;
-    align-items: center; /* Căn giữa theo chiều dọc */
-    flex-wrap: wrap; /* Đảm bảo các phần tử không bị tràn */
-  }
-  
-  .payment-info, .payment-method {
-    background: #fff;
-    padding: 24px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    text-align: center;
-    flex: 0 0 45%;  /* Cung cấp chiều rộng linh hoạt */
-    min-width: 300px; /* Đảm bảo không quá hẹp */
-    display: flex;
     flex-direction: column;
-    justify-content: center; /* Căn giữa nội dung bên trong */
+    align-items: center;
   }
-  
-  .package-title {
-    font-size: 1.5rem;
-    color: var(--primary-dark);
-    margin-bottom: 16px;
+  .payment-info,
+  .payment-method {
+    flex: 0 0 90%;
+    min-width: unset;
   }
-  
-  .payment-info ul {
-    list-style: none;
-    padding: 0;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--text-color);
-    margin-bottom: 20px;
-  }
-  
-  .payment-info .price {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-top: 16px;
-    color: var(--primary-dark);
-  }
-  
   .payment-options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    text-align: center;
+    grid-template-columns: 1fr;
   }
-  
-  .payment-option {
-    background-color: var(--light-gray);
-    padding: 15px;
-    border-radius: var(--radius);
-    transition: background-color 0.3s ease;
-  }
-  
-  .payment-option:hover {
-    background-color: var(--primary);
-  }
-  
-  .payment-option img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-  }
-  
-  .payment-option span {
-    display: block;
-    margin-top: 10px;
-    color: var(--text-color);
-    font-weight: 600;
-  }
-  
-  /* Button Styles */
-  .btn {
-    padding: 10px 20px;
-    border-radius: var(--radius);
-    font-weight: 500;
-    font-size: 1rem;
-    width: 100%;
-    cursor: pointer;
-    border: none;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-primary {
-    background: var(--primary);
-    color: white;
-  }
-  
-  .btn-primary:hover {
-    background: var(--primary-dark);
-  }
-  
-  .btn-secondary {
-    background: white;
-    color: var(--primary);
-    border: 2px solid var(--primary);
-  }
-  
-  .btn-secondary:hover {
-    background: var(--primary);
-    color: white;
-  }
-  
+
+  /* Xếp nút dọc, cùng độ rộng 90%, căn giữa */
   .actions {
-    margin-top: 40px;
-    text-align: center;
-    width: 100%;
+    flex-direction: column;
   }
-  
   .actions .btn {
-    max-width: 200px;
-    margin: auto;
+    width: 90%;
+    max-width: none;
+    margin: 0 auto;
   }
-  
-  /* Animations */
-  .fade-in {
-    animation: fadeIn 0.8s ease;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .payment-wrapper {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .payment-info, .payment-method {
-      width: 100%;
-    }
-  
-    .payment-options {
-      grid-template-columns: 1fr;
-    }
-  }
-  
+}
