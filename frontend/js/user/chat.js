@@ -1,4 +1,6 @@
-// Lấy thông tin user từ localStorage
+// frontend/js/user/chat.js
+
+// Lấy thông tin user
 const user = JSON.parse(localStorage.getItem("user"));
 const userId = user?.user_id;
 const API = "http://localhost:8000/api/v1/user/chat";
@@ -12,6 +14,10 @@ const chatInput       = document.getElementById("chatInput");
 const sendBtn         = document.getElementById("sendBtn");
 const newChatBtn      = document.getElementById("newChatBtn");
 const chatHistoryList = document.getElementById("chatHistoryList");
+const searchBar       = document.querySelector(".search-bar");
+
+// Dữ liệu local cache của tất cả chats
+let allChats = [];
 
 // Auto-resize textarea
 chatInput.addEventListener("input", () => {
@@ -38,31 +44,21 @@ async function sendMessage() {
   chatInput.style.height = "auto";
 
   const histories = messages.map(m => ({ role: m.role, content: m.text }));
-
-  // 👉 Hiển thị "Đang suy nghĩ..." NGAY LẬP TỨC
   const thinkingElement = appendMessage("assistant", "💭 Đang suy nghĩ...");
-
-  // Sau đó thêm class .blinking vào phần tử message-content
   thinkingElement.classList.add("blinking");
 
-
-  // 🚀 Gọi API
   const res = await fetch(`${API}/askllms`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ user_id: userId, question: text, histories })
   });
   const data = await res.json();
-
   if (!res.ok) {
     thinkingElement.innerHTML = data.detail || "Lỗi hệ thống";
     return;
   }
 
-  // ✅ Xoá "Đang suy nghĩ..." và gõ từ từ ra câu trả lời
   thinkingElement.classList.remove("blinking");
-
-  // ✅ Xoá text cũ ("Đang suy nghĩ...") rồi gõ từ từ ra câu trả lời
   thinkingElement.innerHTML = "";
   await typeText(thinkingElement, data.answer);
 
@@ -86,32 +82,14 @@ async function sendMessage() {
     const saved = await saveRes.json();
     currentChatId = saved.id;
     localStorage.setItem("chat_id", currentChatId);
-    loadChatHistory();
+    await fetchAllChats();
   }
 }
 
-// Thêm message vào chat window và trả về element chứa text
-function appendMessage(role, text) {
-  const msg = document.createElement("div");
-  msg.className = `message ${role}`;
-  msg.innerHTML = `
-    <div class="message-content">${text}</div>
-    <div class="message-time">
-      ${new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
-    </div>
-  `;
-  chatWindow.appendChild(msg);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-  return msg.querySelector(".message-content"); // Trả về element để typeText sử dụng
-}
-
-// Hiệu ứng typing từng ký tự
+// Hiệu ứng typing
 async function typeText(element, fullText) {
-  // ✅ Convert Markdown → HTML
   const htmlContent = marked.parse(fullText);
-  element.innerHTML = ""; // Xoá cũ
-
-  // Typing hiệu ứng từng ký tự của HTML:
+  element.innerHTML = "";
   let i = 0;
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = htmlContent;
@@ -120,7 +98,7 @@ async function typeText(element, fullText) {
   for (; i <= finalText.length; i++) {
     element.innerHTML = finalText.substring(0, i);
     chatWindow.scrollTop = chatWindow.scrollHeight;
-    await new Promise(resolve => setTimeout(resolve, 1)); // 10ms mỗi ký tự (tùy chỉnh)
+    await new Promise(r => setTimeout(r, 1));
   }
 }
 
@@ -134,35 +112,45 @@ newChatBtn.addEventListener("click", () => {
   appendMessage("assistant", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
 });
 
-// Load danh sách chat cũ
-async function loadChatHistory() {
+// Fetch toàn bộ chats 1 lần
+async function fetchAllChats() {
   const res = await fetch(`${API}/list/${userId}`);
-  const data = await res.json();
+  allChats = await res.json();
+  renderChatList(allChats);
+}
 
+// Render sidebar list
+function renderChatList(chats) {
   chatHistoryList.innerHTML = "";
-  data.forEach(chat => {
+  chats.forEach(chat => {
     const div = document.createElement("div");
     div.className = "chat-session";
     if (chat.id == currentChatId) div.classList.add("active");
-
     div.innerHTML = `
       <div class="chat-title-row">
         <span class="chat-title">${chat.title}</span>
         <button class="delete-btn" data-id="${chat.id}">🗑</button>
-      </div>
-    `;
-
+      </div>`;
     div.addEventListener("click", () => loadChat(chat));
     div.querySelector(".delete-btn").addEventListener("click", e => {
       e.stopPropagation();
       deleteChat(chat.id);
     });
-
     chatHistoryList.appendChild(div);
   });
 }
 
-// Load nội dung một phiên chat
+// Local search khi gõ
+searchBar.addEventListener("input", e => {
+  const q = e.target.value.trim().toLowerCase();
+  const filtered = allChats.filter(chat =>
+    chat.title.toLowerCase().includes(q) ||
+    chat.message_content.some(m => m.text.toLowerCase().includes(q))
+  );
+  renderChatList(filtered);
+});
+
+// Load một phiên chat
 async function loadChat(chat) {
   if (messages.length > 0) await saveCurrentChat();
   currentChatId = chat.id;
@@ -191,7 +179,7 @@ async function saveCurrentChat() {
     currentChatId = data.id;
     localStorage.setItem("chat_id", currentChatId);
   }
-  loadChatHistory();
+  await fetchAllChats();
 }
 
 // Xoá một phiên chat
@@ -204,12 +192,27 @@ async function deleteChat(chatId) {
     chatWindow.innerHTML = "";
     appendMessage("assistant", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
   }
-  loadChatHistory();
+  await fetchAllChats();
 }
 
-// Khởi tạo khi load trang
+// Thêm message vào chat window
+function appendMessage(role, text) {
+  const msg = document.createElement("div");
+  msg.className = `message ${role}`;
+  msg.innerHTML = `
+    <div class="message-content">${text}</div>
+    <div class="message-time">
+      ${new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
+    </div>
+  `;
+  chatWindow.appendChild(msg);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+  return msg.querySelector(".message-content");
+}
+
+// Khởi tạo
 window.addEventListener("DOMContentLoaded", () => {
-  loadChatHistory();
+  fetchAllChats();
   if (!currentChatId) {
     appendMessage("assistant", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
   }
