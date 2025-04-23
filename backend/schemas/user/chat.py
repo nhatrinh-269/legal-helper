@@ -6,7 +6,7 @@ from typing import List
 from pydantic import BaseModel
 
 class ChatHistoryItem(BaseModel):
-    role: str       # "user" hoặc "bot"
+    role: str       
     content: str
 
 class ChatRequest(BaseModel):

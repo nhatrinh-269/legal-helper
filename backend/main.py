@@ -25,7 +25,8 @@ from api.routers.admin import (
     subscriptions as admin_subscriptions_router,
     payments as admin_payments_router,
     quota as admin_quota_router,
-    dashboard as admin_dashboard_router
+    dashboard as admin_dashboard_router,
+    settings as admin_settings_router
 )
 
 # Init app
@@ -63,6 +64,7 @@ app.include_router(admin_subscriptions_router.router, prefix="/api/v1/admin/subs
 app.include_router(admin_payments_router.router, prefix="/api/v1/admin/payments", tags=["Admin Payments"])
 app.include_router(admin_quota_router.router, prefix="/api/v1/admin/quota", tags=["Admin Usage Quota"])
 app.include_router(admin_dashboard_router.router, prefix="/api/v1/admin/dashboard", tags=["Admin Dashboard"])
+app.include_router(admin_settings_router.router, prefix="/api/v1/admin/settings", tags=["Admin Settings"])
 
 # Exception handlers
 app.add_exception_handler(StarletteHTTPException, http_exception_handler)

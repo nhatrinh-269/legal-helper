@@ -22,7 +22,7 @@ body, html {
   background: var(--background);
 }
 
-/* Layout chính */
+/* Main layout */
 .payment-layout {
   display: flex;
   flex-direction: column;
@@ -31,11 +31,10 @@ body, html {
   width: 100%;
   max-width: 1200px;
   padding: 40px;
-  margin: 0 auto;
   background: var(--background);
 }
 
-/* Tiêu đề */
+/* Title */
 .title {
   text-align: center;
   font-size: 2rem;
@@ -43,7 +42,7 @@ body, html {
   margin-bottom: 30px;
 }
 
-/* Wrapper hai khung thông tin */
+/* Wrapper for info and method panels */
 .payment-wrapper {
   display: flex;
   gap: 24px;
@@ -52,7 +51,7 @@ body, html {
   width: 100%;
 }
 
-/* Các khung info và phương thức */
+/* Panels */
 .payment-info,
 .payment-method {
   flex: 0 0 45%;
@@ -67,14 +66,14 @@ body, html {
   text-align: center;
 }
 
-/* Tiêu đề gói */
+/* Package title */
 .package-title {
   font-size: 1.5rem;
   color: var(--primary-dark);
   margin-bottom: 16px;
 }
 
-/* Danh sách tính năng */
+/* Features list */
 .payment-info ul {
   list-style: none;
   padding: 0;
@@ -89,14 +88,14 @@ body, html {
   margin-top: 16px;
 }
 
-/* Phần chọn phương thức */
+/* Payment methods */
 .payment-method h3 {
   color: var(--primary-dark);
   margin-bottom: 16px;
 }
 .payment-options {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 .payment-option {
@@ -121,7 +120,7 @@ body, html {
   color: var(--text-color);
 }
 
-/* Button chung */
+/* Buttons */
 .btn {
   padding: 10px 20px;
   border-radius: var(--radius);
@@ -130,14 +129,11 @@ body, html {
   cursor: pointer;
   border: none;
   transition: background 0.3s ease;
-  width: 100%;
-  display: inline-flex;         /* hoặc flex nếu bạn muốn block-level */
-  justify-content: center;      /* căn giữa ngang */
-  align-items: center;          /* căn giữa dọc */
-  text-align: center;           /* fallback cho inline-block */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
-
-/* Nút chính */
 .btn-primary {
   background: var(--primary);
   color: #fff;
@@ -145,8 +141,6 @@ body, html {
 .btn-primary:hover {
   background: var(--primary-dark);
 }
-
-/* Nút quay lại */
 .btn-secondary {
   background: #fff;
   color: var(--primary);
@@ -157,23 +151,22 @@ body, html {
   color: #fff;
 }
 
-/* --- Đoạn quan trọng: căn giữa 2 nút và tạo gap đều --- */
+/* Actions (buttons group) */
 .actions {
   display: flex;
-  justify-content: center; /* Căn giữa cả nhóm nút */
+  justify-content: center;
   align-items: center;
-  gap: 16px;               /* Khoảng cách giữa các nút */
-  width: 100%;
-  max-width: 600px;
-  margin-top: 40px;
+  gap: 16px;
+  margin: 40px auto 0;
+  width: max-content;
 }
-
-/* Cho cả hai nút chia đều không gian (desktop) */
 .actions .btn {
-  flex: 1;
+  flex: none;
+  width: auto;
+  min-width: 120px;
 }
 
-/* Animations */
+/* Fade-in animation */
 .fade-in {
   animation: fadeIn 0.8s ease;
 }
@@ -182,9 +175,8 @@ body, html {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive trên mobile */
+/* Mobile styles */
 @media (max-width: 768px) {
-  /* Xếp khung info & method dọc */
   .payment-wrapper {
     flex-direction: column;
     align-items: center;
@@ -197,14 +189,29 @@ body, html {
   .payment-options {
     grid-template-columns: 1fr;
   }
-
-  /* Xếp nút dọc, cùng độ rộng 90%, căn giữa */
   .actions {
     flex-direction: column;
   }
   .actions .btn {
     width: 90%;
-    max-width: none;
     margin: 0 auto;
+  }
+}
+
+/* Desktop centering */
+@media (min-width: 769px) {
+  body, html {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  /* payment-layout is already centered by body flex */
+  .payment-wrapper {
+    justify-content: center;
+  }
+  .actions {
+    /* already defined above */
   }
 }

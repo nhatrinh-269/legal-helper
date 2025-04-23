@@ -33,11 +33,13 @@ body, html {
   overflow: hidden;
 }
 
+/* Sidebar */
 .sidebar {
   background: var(--bg-white);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
+  transition: transform var(--transition);
 }
 
 .sidebar-header {
@@ -53,7 +55,7 @@ body, html {
 
 .settings {
   cursor: pointer;
-  transition: transform 0.3s ease, color 0.3s ease;
+  transition: transform var(--transition), color var(--transition);
   font-size: 1.2rem;
   color: var(--text-secondary);
 }
@@ -85,7 +87,7 @@ body, html {
   background: var(--bg-light);
   border-radius: var(--radius);
   cursor: pointer;
-  transition: background var(--transition);
+  transition: background var(--transition), border-left-color var(--transition);
   border-left: 3px solid transparent;
 }
 
@@ -95,17 +97,32 @@ body, html {
   border-left-color: var(--primary);
 }
 
+.chat-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .chat-title {
   font-weight: 600;
   color: var(--text-primary);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.chat-preview {
-  font-size: 0.85rem;
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
   color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  transition: color var(--transition);
+}
+
+.delete-btn:hover {
+  color: red;
 }
 
 .sidebar-footer {
@@ -116,6 +133,7 @@ body, html {
   gap: 10px;
 }
 
+/* Buttons */
 .btn {
   width: 100%;
   text-align: center;
@@ -124,9 +142,10 @@ body, html {
   font-weight: 600;
   border: 1px solid var(--primary);
   cursor: pointer;
-  transition: all var(--transition);
-  display: block;
+  transition: background var(--transition), color var(--transition);
   text-decoration: none;
+  color: var(--primary);
+  background: var(--bg-white);
 }
 
 .btn-primary {
@@ -144,6 +163,7 @@ body, html {
   color: #fff;
 }
 
+/* Chat panel */
 .chat-panel {
   display: flex;
   flex-direction: column;
@@ -155,8 +175,22 @@ body, html {
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
   display: flex;
-  justify-content: space-between;
   align-items: center;
+}
+
+.menu-btn {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  margin-right: 1rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: color var(--transition);
+}
+
+.menu-btn:hover {
+  color: var(--primary);
 }
 
 .header-left {
@@ -229,7 +263,6 @@ body, html {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   font-size: 1rem;
-  font-family: inherit;
   overflow-y: auto;
   max-height: 200px;
   line-height: 1.4;
@@ -255,75 +288,34 @@ body, html {
   0% { transform: translateY(30px); opacity: 0; }
   100% { transform: translateY(0); opacity: 1; }
 }
-
 @keyframes fadeInSlide {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive */
+/* Responsive: mobile */
 @media (max-width: 768px) {
   .container {
     grid-template-columns: 1fr;
   }
-
   .sidebar {
-    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100%;
+    width: 240px;
+    transform: translateX(-100%);
+    z-index: 1000;
   }
-
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .menu-btn {
+    display: block;
+  }
+  .chat-header {
+    justify-content: flex-start;
+  }
   .chat-panel {
     width: 100%;
   }
-}
-
-.chat-title-row {
-  display: flex;
-  justify-content: space-between; /* 👈 để title và icon cách xa nhau */
-  align-items: center;
-  width: 100%;
-}
-
-.chat-title {
-  font-weight: 600;
-  color: var(--text-primary);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.delete-btn {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: color 0.2s ease;
-}
-
-.delete-btn:hover {
-  color: red;
-}
-
-.message.assistant {
-  background-color: #f1f1f1;
-  border-radius: 12px;
-  padding: 8px 12px;
-  max-width: 80%;
-  margin: 5px 0;
-}
-
-.blinking {
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0%   { opacity: 1; }
-  50%  { opacity: 0.4; }
-  100% { opacity: 1; }
 }

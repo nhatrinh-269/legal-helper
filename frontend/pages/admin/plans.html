@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gói dịch vụ - Admin</title>
-  <link rel="stylesheet" href="../../css/admin/plans.css?v=1" />
+  <link rel="stylesheet" href="../../css/admin/plans.css?v=2" />
 </head>
 <body class="fade-in">
   <div class="admin-dashboard">
@@ -48,6 +48,40 @@
     </main>
   </div>
 
-  <script src="../../js/admin/plans.js?v=2"></script>
+  <!-- Plan Modal -->
+  <div id="planModal" class="modal d-none">
+    <div class="modal-content">
+      <span id="closePlanModal" class="modal-close">&times;</span>
+      <h2 id="planModalTitle">Thêm gói mới</h2>
+      <form id="planForm">
+        <label>
+          Tên gói
+          <input type="text" id="inputName" required />
+        </label>
+        <label>
+          Mô tả
+          <textarea id="inputDesc" rows="3"></textarea>
+        </label>
+        <label>
+          Giá (VNĐ)
+          <input type="number" id="inputPrice" step="0.01" required />
+        </label>
+        <label>
+          Thời hạn (ngày)
+          <input type="number" id="inputDuration" required />
+        </label>
+        <label>
+          Giới hạn câu hỏi/ngày
+          <input type="number" id="inputLimit" required />
+        </label>
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-primary">Lưu</button>
+          <button type="button" id="cancelPlanBtn" class="btn btn-outline">Hủy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../../js/admin/plans.js?v=4"></script>
 </body>
 </html>
