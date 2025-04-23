@@ -3,25 +3,178 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Legal Helper</title>
-  <link rel="stylesheet" href="../css/index.css" />
+  <title>Legal Helper - Trợ lý pháp lý AI</title>
+  <link rel="stylesheet" href="../css/index.css?v=11" />
 </head>
 <body>
-  <div class="hero-section">
-    <div class="hero-card">
-      <img src="../assets/logo_black.png" alt="Legal Helper Logo" class="logo"/>
-      <h1>Legal Helper</h1>
-      <p class="tagline">Trợ lý pháp luật thông minh dành cho bạn</p>
-      <p class="description">
-        Đặt câu hỏi pháp lý, nhận câu trả lời chính xác, nhanh chóng. Legal Helper là giải pháp chatbot ứng dụng trí tuệ nhân tạo để hỗ trợ pháp lý cho mọi người.
-      </p>
-      <a href="login" class="cta-button">Bắt đầu ngay</a>
-      <footer>
-        <p>&copy; 2024 Legal Helper. Mọi quyền được bảo lưu.</p>
-      </footer>
-    </div>
-  </div>
 
-  <script src="../js/index.js"></script>
+  <!-- Overlay cho sidebar mobile -->
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <!-- Sidebar mobile -->
+  <aside id="mobileSidebar" class="mobile-sidebar">
+    <nav>
+      <a href="#hero" class="nav-link">Trang chủ</a>
+      <a href="#features" class="nav-link">Tính năng</a>
+      <a href="#pricing" class="nav-link">Gói dịch vụ</a>
+      <a href="#testimonials" class="nav-link">Khách hàng</a>
+      <a href="login" class="btn btn-primary">Đăng nhập</a>
+    </nav>
+  </aside>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <!-- Nút Hamburger chuyển ra trước logo -->
+      <button id="hamburgerBtn" class="hamburger-btn">☰</button>
+  
+      <!-- Logo -->
+      <a href="#" class="logo">
+        <img src="assets/logo_black.png" alt="Legal Helper">
+      </a>
+  
+      <!-- Menu desktop -->
+      <nav class="nav">
+        <a href="#hero" class="nav-link">Trang chủ</a>
+        <a href="#features" class="nav-link">Tính năng</a>
+        <a href="#pricing" class="nav-link">Gói dịch vụ</a>
+        <a href="#testimonials" class="nav-link">Khách hàng</a>
+        <a href="login" class="btn btn-primary">Đăng nhập</a>
+      </nav>
+    </div>
+  </header>
+  
+
+  <!-- Hero -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1>Trợ lý pháp lý AI cho doanh nghiệp và cá nhân</h1>
+        <p>Hỏi đáp pháp lý nhanh chóng, chính xác, mọi lúc mọi nơi.</p>
+        <a href="login" class="cta-button">Bắt đầu ngay</a>
+      </div>
+      <div class="hero-image">
+        <img src="../assets/legal_img.jpg" alt="Legal Assistant Illustration">
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2>Tính năng nổi bật</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <img src="../assets/feature1.png" alt="Chính xác">
+          <h3>Đáp án chuẩn xác</h3>
+          <p>Thông tin cập nhật từ các văn bản pháp luật mới nhất.</p>
+        </div>
+        <div class="feature-item">
+          <img src="../assets/feature2.png" alt="Nhanh chóng">
+          <h3>Phản hồi tức thì</h3>
+          <p>Chatbot AI trả lời chỉ trong vài giây, tiết kiệm thời gian.</p>
+        </div>
+        <div class="feature-item">
+          <img src="../assets/feature3.png" alt="Hỗ trợ">
+          <h3>Hỗ trợ 24/7</h3>
+          <p>Đảm bảo bạn luôn có câu trả lời khi cần thiết.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="pricing">
+    <div class="container">
+      <h2>Gói dịch vụ phù hợp với bạn</h2>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3>Free</h3>
+          <p class="price">0đ / tháng</p>
+          <ul>
+            <li>10 câu hỏi về pháp luật cơ bản</li>
+            <li>Hỗ trợ tra cứu văn bản giới hạn</li>
+          </ul>
+          <a href="register" class="btn btn-outline">Đăng ký miễn phí</a>
+        </div>
+        <div class="pricing-card">
+          <h3>Pro</h3>
+          <p class="price">99.000đ / tháng</p>
+          <ul>
+            <li>50 câu hỏi mỗi ngày</li>
+            <li>Phạm vi câu hỏi mở rộng</li>
+            <li>Phản hồi nhanh và chính xác hơn</li>
+          </ul>
+          <a href="register" class="btn btn-primary">Chọn Pro</a>
+        </div>
+        <div class="pricing-card highlight">
+          <h3>Premium <span class="badge">Đề xuất</span></h3>
+          <p class="price">199.000đ / tháng</p>
+          <ul>
+            <li>200 câu hỏi mỗi tháng</li>
+            <li>Phân tích và xử lý tình huống pháp lý chuyên sâu</li>
+            <li>Hỗ trợ ưu tiên cao nhất</li>
+          </ul>
+          <a href="register" class="btn btn-primary">Chọn Premium</a>
+        </div>
+        <div class="pricing-card">
+          <h3>Enterprise</h3>
+          <p class="price">Liên hệ</p>
+          <ul>
+            <li>API pháp lý dành cho doanh nghiệp</li>
+            <li>Tùy chỉnh giải pháp theo nhu cầu riêng</li>
+            <li>Triển khai hệ thống riêng biệt</li>
+          </ul>
+          <a href="" class="btn btn-outline">Liên hệ tư vấn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="testimonials">
+    <div class="container">
+      <h2>Khách hàng nói gì về chúng tôi?</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p>"Legal Helper giúp công ty tôi yên tâm hơn về các vấn đề pháp lý."</p>
+          <span class="author">— Giám đốc Công ty ABC</span>
+        </div>
+        <div class="testimonial-card">
+          <p>"Giải pháp tiện lợi, hỗ trợ nhanh chóng, rất phù hợp với startup."</p>
+          <span class="author">— CEO Startup XYZ</span>
+        </div>
+        <div class="testimonial-card">
+          <p>"Dịch vụ chuyên nghiệp, phản hồi nhanh, giao diện dễ sử dụng."</p>
+          <span class="author">— Luật sư Phạm Minh Hùng</span>
+        </div>
+        <div class="testimonial-card">
+          <p>"Nhờ Legal Helper, tôi tiết kiệm được rất nhiều thời gian khi xử lý các vấn đề pháp lý thường gặp."</p>
+          <span class="author">— Chủ doanh nghiệp nhỏ Nguyễn Thị Hoa</span>
+        </div>
+        <div class="testimonial-card">
+          <p>"Tôi rất ấn tượng với tốc độ và độ chính xác của Legal Helper, mọi thắc mắc pháp lý đều được giải đáp ngay."</p>
+          <span class="author">— Kế toán trưởng Trần Văn Quang</span>
+        </div>
+        <div class="testimonial-card">
+          <p>"Sản phẩm mang lại trải nghiệm vượt ngoài mong đợi, giúp tôi chủ động trong việc giải quyết các hợp đồng và tranh chấp."</p>
+          <span class="author">— Giám đốc Nhân sự Lê Thị Mai Anh</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>&copy; 2024 Legal Helper. Mọi quyền được bảo lưu.</p>
+      <div class="social">
+        <a href="#"><img src="../assets/Facebook.webp" alt="Facebook"></a>
+        <a href="#"><img src="../assets/linkedln.png" alt="LinkedIn"></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/index.js?v=1"></script>
 </body>
 </html>

@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legal Helper - Chat</title>
-  <link rel="stylesheet" href="../../css/user/chat.css?v=1" />
+  <link rel="stylesheet" href="../../css/user/chat.css?v=19" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body class="fade-in">
   <div class="container">
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside id="sidebar" class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-title">
           <h2>Legal Helper</h2>
@@ -29,9 +30,10 @@
     <!-- Chat panel -->
     <section class="chat-panel">
       <div class="chat-header">
+        <button id="menuBtn" class="menu-btn">☰</button>
         <div class="header-left">
           <a href="user_information">
-            <img src="../../assets/legal_img.jpg" alt="Avatar" class="bot-avatar" />
+            <img src="../../assets/profile.png" alt="Avatar" class="bot-avatar" />
           </a>
           <h3>Chat với Legal Helper</h3>
         </div>
@@ -44,6 +46,6 @@
     </section>
   </div>
 
-  <script src="../../js/user/chat.js?v=1"></script>
+  <script src="../../js/user/chat.js?v=19"></script>
 </body>
 </html>

@@ -25,15 +25,17 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
 
     # Gemini
-    GEMINI_API_KEY: str = Field(..., env="GEMINI_API_KEY")
+    # GEMINI_API_KEY: str = Field(..., env="GEMINI_API_KEY")
 
-    @property
-    def GEMINI_CONFIG(self) -> dict:
-        return {
-            "api_key": self.GEMINI_API_KEY,
-            "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
-            "headers": {"Content-Type": "application/json"}
-        }
+    # @property
+    # def GEMINI_CONFIG(self) -> dict:
+    #     return {
+    #         "api_key": self.GEMINI_API_KEY,
+    #         "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
+    #         "headers": {"Content-Type": "application/json"}
+    #     }
+
+    LAW_RAG_CHAT_URL: str = Field(..., env="LAW_RAG_CHAT_URL")
 
     class Config:
         env_file = ".env"  # auto-load từ .env nếu chạy local

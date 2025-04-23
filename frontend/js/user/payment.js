@@ -56,8 +56,8 @@ function getCurrentUser() {
           <div class="payment-options">
             ${pkg.methods.map(m => `
               <label class="payment-option">
-                <input type="radio" name="method" value="${m}" ${m==="momo"?"checked":""}/>
-                <img src="/assets/${m.charAt(0).toUpperCase()+m.slice(1)}.${m==="stripe"?"jpeg":m==="vnpay"?"webp":"png"}" alt="${m}" />
+                <input type="radio" name="method" value="${m}" ${m === "momo" ? "checked" : ""}/>
+                <img src="/assets/${m}.png" alt="${m}" />
                 <span>${m.toUpperCase()}</span>
               </label>
             `).join("")}

@@ -2,37 +2,64 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thông tin người dùng</title>
-  <link rel="stylesheet" href="../../css/user/user_information.css" />
+  <link rel="stylesheet" href="../../css/user/user_information.css?v=7" />
 </head>
-<body>
-  <div class="profile-container">
-    <div class="profile-box fade-in">
-      
+<body class="fade-in">
+  <main class="profile-container">
+    <h1 class="title">Thông tin người dùng</h1>
+
+    <section class="profile-box slide-up">
       <!-- Avatar -->
-      <div class="left slide-left">
-        <div class="avatar-wrapper pop-in">
-          <img src="../../assets/legal_img.jpg" alt="Avatar" />
+      <div class="left pop-in">
+        <div class="avatar-wrapper">
+          <img src="../../assets/profile.png" alt="Avatar" />
           <span class="camera-icon">📷</span>
         </div>
       </div>
 
-      <!-- Thông tin -->
-      <div class="right slide-up">
-        <ul class="info-list">
+      <!-- Info -->
+      <div class="right pop-in">
+        <ul class="info-list" id="infoList">
           <!-- JS sẽ đổ dữ liệu vào đây -->
         </ul>
 
-        <div class="action-buttons row pop-in">
-          <button class="edit-button">Edit Profile</button>
-          <a href="../login" class="back-to-login">Logout</a>
-          <a href="chat" class="back-to-chat">Quay lại</a>
-        </div>          
+        <div class="action-buttons row">
+          <button id="editBtn" class="btn btn-outline">Chỉnh sửa</button>
+          <button id="deleteBtn" class="btn btn-danger">Xóa tài khoản</button>
+          <button id="logoutBtn" class="btn btn-danger">Đăng xuất</button>
+          <button id="backBtn"   class="btn btn-outline">Quay lại</button>
+        </div>
       </div>
+    </section>
+  </main>
+
+  <!-- Modal Edit -->
+  <div id="editModal" class="modal d-none">
+    <div class="modal-content pop-in">
+      <h2>Chỉnh sửa thông tin</h2>
+      <form id="editForm" novalidate>
+        <label>
+          Họ tên
+          <input type="text" id="inputName" required />
+        </label>
+        <label>
+          Email
+          <input type="email" id="inputEmail" required />
+        </label>
+        <label>
+          Mật khẩu mới
+          <input type="password" id="inputPassword" placeholder="(để trống nếu không đổi)" />
+        </label>
+        <div class="modal-buttons">
+          <button type="submit" class="btn btn-primary">Lưu</button>
+          <button type="button" id="cancelModal" class="btn btn-outline">Hủy</button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <script src="../../js/user/user_information.js"></script>
+  <script src="../../js/user/user_information.js?v=3"></script>
 </body>
 </html>

@@ -3,34 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Feedback - Legal Helper</title>
-  <link rel="stylesheet" href="../../css/user/feedback.css?v=1" />
+  <title>Phản hồi - Legal Helper</title>
+  <link rel="stylesheet" href="../../css/user/feedback.css?v=2" />
 </head>
 <body>
-  <div class="feedback-layout fade-in">
+  <main class="feedback-layout fade-in">
     <h1 class="title">Phản hồi của bạn</h1>
 
     <!-- Phần nhập thông tin phản hồi -->
-    <div class="feedback-form">
+    <section class="feedback-form">
       <h3>Gửi phản hồi</h3>
       <form id="feedbackForm">
         <textarea id="feedbackInput" placeholder="Nhập phản hồi của bạn..." required></textarea>
         <button type="submit" class="btn btn-primary">Gửi</button>
       </form>
-    </div>
+    </section>
 
     <!-- Lịch sử phản hồi -->
-    <div class="feedback-history">
+    <section class="feedback-history">
       <div class="feedback-title">
         <h3>Lịch sử phản hồi</h3>
       </div>
-      <!-- feedback-item sẽ được thêm bằng JS -->
-    </div>
+      <!-- Các mục phản hồi sẽ được thêm vào đây bởi JS -->
+      <div id="historyContainer"></div>
+    </section>
 
     <div class="actions">
       <a href="chat" class="btn btn-secondary">Quay lại</a>
     </div>
-  </div>
+  </main>
 
   <script src="../../js/user/feedback.js"></script>
 </body>

@@ -17,3 +17,6 @@ class DeleteResponse(BaseModel):
 
     class Config:
         orm_mode = True
+        
+class UserEmailResponse(BaseModel):
+    email: str

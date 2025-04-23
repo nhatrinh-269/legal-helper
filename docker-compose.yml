@@ -20,6 +20,38 @@ services:
     networks:
       - legalhelper-network  
 
+  lh-neo4j:
+    image: neo4j:latest
+    container_name: lh-neo4j
+    restart: unless-stopped
+    ports:
+      - 7474:7474
+      - 7687:7687
+    networks:
+      - legalhelper-network
+    volumes:
+      - ./lh-neo4j-data:/data
+    environment:
+      - NEO4J_AUTH=none
+
+  lh-api:
+    build: 
+      context: ../vietnamese-law-bot
+      dockerfile: src/Dockerfile
+    image: lh-api
+    container_name: lh-api
+    restart: unless-stopped
+    ports:
+      - 8001:8001
+    networks:
+      - legalhelper-network
+    depends_on:
+      - lh-neo4j
+    env_file:
+      - .env
+    environment:
+      - NEO4J_HOST=lh-neo4j
+
   legalhelper:
     build:
       context: .
@@ -28,6 +60,7 @@ services:
     restart: always
     depends_on:
       - legalhelperdb
+      - lh-api
     ports:
       - "8000:8000"
     networks:
@@ -40,9 +73,10 @@ services:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS} 
       DB_NAME: ${DB_NAME}
+      LAW_RAG_CHAT_URL: ${LAW_RAG_CHAT_URL}
     env_file:
       - .env 
-      
+
 networks:
   legalhelper-network:
     driver: bridge
