@@ -34,7 +34,7 @@ body, html {
   background: #fff;
   padding: 50px 40px;
   max-width: 600px;
-  width: 100%;
+  width: 90%;                       /* Tự động scale nhỏ lại nếu màn hình bé */
   border-radius: 16px;
   box-shadow: 0 20px 50px rgba(108, 117, 125, 0.12);
   text-align: center;
@@ -42,14 +42,16 @@ body, html {
 }
 
 .logo {
-  height: 200px;
+  height: 180px;
   margin-bottom: 20px;
   animation: bounceIn 0.9s;
+  max-width: 80%;
 }
 
+/* Typography */
 h1 {
   font-size: 2.5rem;
-  color: var(--primary-color);  /* Màu tím cho tiêu đề */
+  color: var(--primary-color);
   margin-bottom: 10px;
 }
 
@@ -66,6 +68,7 @@ h1 {
   line-height: 1.6;
 }
 
+/* Button */
 .cta-button {
   display: inline-block;
   padding: 14px 32px;
@@ -114,5 +117,16 @@ footer {
 
   .cta-button {
     width: 100%;
+  }
+
+  .logo {
+    height: 140px;
+  }
+}
+
+/* 🟢 Tăng size logo cho màn lớn hơn */
+@media (min-width: 1200px) {
+  .logo {
+    height: 220px;
   }
 }

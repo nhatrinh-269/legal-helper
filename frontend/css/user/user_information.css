@@ -1,213 +1,222 @@
 :root {
-    --purple: #6c63ff;
-    --border: #dcdcdc;
-    --text: #333;
-    --bg: #fff;
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .profile-container {
-    padding: 20px;
-    width: 100%;
-    max-width: 1000px;
-  }
-  
-  .profile-box {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    background: var(--bg);
-    padding: 32px;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    justify-content: center;
-    align-items: center;
+  --purple: #6c63ff;
+  --border: #dcdcdc;
+  --text: #333;
+  --bg: #fff;
+}
 
-  }
-  
-  .left {
-    display: flex;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+
+  /* Căn giữa cả khung lên giữa màn hình */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;        /* Căn giữa ngang */
+  padding: 20px;
+}
+
+/* Tiêu đề */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+/* Hộp profile */
+.profile-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  background: var(--bg);
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Avatar */
+.left {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  aspect-ratio: 1 / 1;
+  background: #f0f0f0;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.2rem;
+  background: white;
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Thông tin bên phải */
+.right {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.info-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Nút hành động */
+.action-buttons.row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.action-buttons.row button,
+.action-buttons.row a {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Edit Profile */
+.edit-button {
+  border: 2px solid var(--purple);
+  background: white;
+  color: var(--purple);
+}
+.edit-button:hover {
+  background: var(--purple);
+  color: white;
+}
+
+/* Logout */
+.back-to-login {
+  border: 2px solid #e74c3c;
+  background: white;
+  color: #e74c3c;
+}
+.back-to-login:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+/* Quay lại chat */
+.back-to-chat {
+  border: 2px solid #888;
+  background: white;
+  color: #555;
+}
+.back-to-chat:hover {
+  background: #ddd;
+  color: #000;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.8s ease;
+}
+.pop-in {
+  animation: popIn 0.7s ease;
+}
+.slide-left {
+  animation: slideLeft 0.7s ease;
+}
+.slide-up {
+  animation: slideUp 0.7s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes popIn {
+  0%   { transform: scale(0.95); opacity: 0; }
+  60%  { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes slideLeft {
+  0% { transform: translateX(-30px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideUp {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-box {
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    flex: 0 0 auto;
-    min-width: 240px;
+    text-align: center;
+    padding: 20px;
+    gap: 20px;
   }
-  
   .avatar-wrapper {
-    position: relative;
-    width: 350px;
-    height: 350px;
-    background: #f0f0f0;
-    border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    max-width: 50%;
   }
-  
-  .avatar-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .camera-icon {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 1.2rem;
-    background: white;
-    border-radius: 50%;
-    padding: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .right {
-    flex: 1;
-    min-width: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .info-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px;
-    font-size: 1rem;
-    color: var(--text);
-  }
-  
   .info-list li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
+    padding: 6px 0;
+    font-size: 0.9rem;
   }
-  
-  /* --- Action Buttons --- */
   .action-buttons.row {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 20px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
   }
-  
   .action-buttons.row button,
   .action-buttons.row a {
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.3s ease;
+    width: 100%;
   }
-  
-  /* Edit Profile button */
-  .edit-button {
-    border: 2px solid var(--purple);
-    background: white;
-    color: var(--purple);
-  }
-  .edit-button:hover {
-    background: var(--purple);
-    color: white;
-  }
-  
-  /* Logout button */
-  .back-to-login {
-    border: 2px solid #e74c3c;
-    background: white;
-    color: #e74c3c;
-  }
-  .back-to-login:hover {
-    background: #e74c3c;
-    color: white;
-  }
-  
-  /* Back to chat button */
-  .back-to-chat {
-    border: 2px solid #888;
-    background: white;
-    color: #555;
-  }
-  .back-to-chat:hover {
-    background: #ddd;
-    color: #000;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .profile-box {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-  
-    .right {
-      align-items: center;
-    }
-  
-    .action-buttons.row {
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-  
-    .action-buttons.row button,
-    .action-buttons.row a {
-      width: 100%;
-      text-align: center;
-    }
-  }
-  
-  /* --- Animation Effects --- */
-  .fade-in {
-    animation: fadeIn 0.8s ease;
-  }
-  
-  .pop-in {
-    animation: popIn 0.7s ease;
-  }
-  
-  .slide-left {
-    animation: slideLeft 0.7s ease;
-  }
-  
-  .slide-up {
-    animation: slideUp 0.7s ease;
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes popIn {
-    0%   { transform: scale(0.95); opacity: 0; }
-    60%  { transform: scale(1.05); opacity: 1; }
-    100% { transform: scale(1); }
-  }
-  
-  @keyframes slideLeft {
-    0% { transform: translateX(-30px); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
-  }
-  
-  @keyframes slideUp {
-    0% { transform: translateY(40px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
-  
+}

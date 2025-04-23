@@ -15,12 +15,18 @@ router = APIRouter()
 @router.post("/auth/login", response_model=LoginResponse)
 def login(payload: LoginRequest, db: Session = Depends(get_db)):
     user = authenticate_user(payload.email, payload.password, db)
+    
+    # Thêm kiểm tra status
+    if user.status != "active":
+        raise HTTPException(status_code=403, detail="Tài khoản đang bị khoá hoặc chưa kích hoạt")
+
     return {
         "message": "Login successful",
         "user_id": user.user_id,
         "email": user.email,
         "role": user.role
     }
+
 
 @router.post("/auth/register", response_model=RegisterResponse, status_code=201)
 def register(payload: RegisterRequest, db: Session = Depends(get_db)):

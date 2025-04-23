@@ -2,25 +2,27 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thông tin người dùng</title>
-  <link rel="stylesheet" href="../../css/user/user_information.css" />
+  <link rel="stylesheet" href="../../css/user/user_information.css?v=5" />
 </head>
 <body>
-  <div class="profile-container">
-    <div class="profile-box fade-in">
-      
+  <main class="profile-container">
+    <!-- Tiêu đề trang được căn giữa -->
+    <h1 class="title">Thông tin người dùng</h1>
+
+    <section class="profile-box fade-in">
       <!-- Avatar -->
       <div class="left slide-left">
         <div class="avatar-wrapper pop-in">
-          <img src="../../assets/legal_img.jpg" alt="Avatar" />
+          <img src="../../assets/profile.png" alt="Avatar" />
           <span class="camera-icon">📷</span>
         </div>
       </div>
 
       <!-- Thông tin -->
       <div class="right slide-up">
-        <ul class="info-list">
+        <ul class="info-list" id="infoList">
           <!-- JS sẽ đổ dữ liệu vào đây -->
         </ul>
 
@@ -30,8 +32,8 @@
           <a href="chat" class="back-to-chat">Quay lại</a>
         </div>          
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <script src="../../js/user/user_information.js"></script>
 </body>
