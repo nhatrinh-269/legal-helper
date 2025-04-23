@@ -1,44 +1,74 @@
+# backend/services/question_handler.py
+
 import httpx
+from httpx import ReadTimeout
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from datetime import date
 
-from core.config import settings
 from models.UsageQuota import UsageQuota
+from models.Subscriptions import Subscription, SubscriptionStatus
+from models.ServicePackages import ServicePackage
 
+from core.config import settings
 
-async def askllms(question: str, user_id: int, db: Session) -> str:
-    # 1. Kiểm tra quota hôm nay của user
+async def askllms(
+    user_id: int,
+    question: str,
+    histories: list[dict],
+    db: Session
+) -> str:
+    # 1. Kiểm tra quota (logic cũ)
     quota = db.query(UsageQuota).filter_by(user_id=user_id).first()
-
     if not quota:
-        raise HTTPException(status_code=403, detail="Bạn chưa được cấp quota sử dụng hôm nay.")
-
+        raise HTTPException(403, "Bạn chưa được cấp quota hôm nay.")
     if quota.questions_asked >= quota.question_limit:
-        raise HTTPException(status_code=403, detail="Bạn đã hết lượt hỏi trong ngày.")
+        raise HTTPException(403, "Bạn đã hết lượt hỏi trong ngày.")
 
-    # 2. Gọi Gemini API
-    url = f"{settings.GEMINI_CONFIG['endpoint']}?key={settings.GEMINI_API_KEY}"
-    headers = {"Content-Type": "application/json"}
+    # 2. Lấy plan_type thật sự từ Subscription & package
+    sub = (
+        db.query(Subscription)
+          .filter_by(user_id=user_id, status=SubscriptionStatus.active)
+          .order_by(Subscription.end_time.desc())
+          .first()
+    )
+    if sub:
+        pkg = db.query(ServicePackage).filter_by(package_id=sub.package_id).first()
+        plan_type = pkg.package_name.lower()  # "free" / "pro" / "premium"
+        print("Plan type:", plan_type)
+    else:
+        print("No active subscription found, defaulting to free plan.")
+        plan_type = "free"
+
+    # 3. Forward payload lên Law-RAG API
+    url = settings.LAW_RAG_CHAT_URL
     payload = {
-        "contents": [{
-            "parts": [{"text": question}]
-        }]
+        "question": question,
+        "histories": histories,
+        "plan_type": plan_type
     }
 
-    async with httpx.AsyncClient(timeout=20.0) as client:
-        response = await client.post(url, headers=headers, json=payload)
-
-    if response.status_code != 200:
-        raise HTTPException(status_code=response.status_code, detail="Lỗi từ Gemini API")
+    # Thiết lập timeout đầy đủ: connect, read, write, pool
+    timeout = httpx.Timeout(connect=5.0, read=60.0, write=60.0, pool=5.0)
 
     try:
-        answer = response.json()["candidates"][0]["content"]["parts"][0]["text"]
-    except (KeyError, IndexError):
-        raise HTTPException(status_code=500, detail="Không thể xử lý phản hồi từ mô hình Gemini")
+        async with httpx.AsyncClient(timeout=timeout) as client:
+            res = await client.post(url, json=payload)
+    except ReadTimeout:
+        raise HTTPException(504, "Service pháp lý đang bận, vui lòng thử lại sau.")
+    except httpx.HTTPError as e:
+        raise HTTPException(502, f"Lỗi kết nối đến service pháp lý: {e}")
 
-    # 3. Cập nhật số câu hỏi đã hỏi
+    if res.status_code != 200:
+        raise HTTPException(res.status_code, f"Law-RAG lỗi: {res.text}")
+
+    body = res.json()
+    if body.get("error"):
+        raise HTTPException(500, body["error"])
+    answer = body.get("response") or ""
+
+    # 4. Cập nhật quota
     quota.questions_asked += 1
     db.commit()
 
-    return answer
+    return answer.strip()

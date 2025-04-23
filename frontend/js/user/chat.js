@@ -1,3 +1,6 @@
+// frontend/js/user/chat.js
+
+// Lấy thông tin user từ localStorage
 const user = JSON.parse(localStorage.getItem("user"));
 const userId = user?.user_id;
 const API = "http://localhost:8000/api/v1/user/chat";
@@ -5,68 +8,70 @@ const API = "http://localhost:8000/api/v1/user/chat";
 let currentChatId = localStorage.getItem("chat_id") || null;
 let messages = [];
 
-const chatWindow = document.getElementById("chatWindow");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
-const newChatBtn = document.getElementById("newChatBtn");
+// DOM elements
+const chatWindow      = document.getElementById("chatWindow");
+const chatInput       = document.getElementById("chatInput");
+const sendBtn         = document.getElementById("sendBtn");
+const newChatBtn      = document.getElementById("newChatBtn");
 const chatHistoryList = document.getElementById("chatHistoryList");
 
-// Resize textarea
+// Auto-resize textarea
 chatInput.addEventListener("input", () => {
   chatInput.style.height = "auto";
   chatInput.style.height = chatInput.scrollHeight + "px";
 });
 
-// Gửi tin nhắn khi Enter
+// Gửi message khi nhấn Enter (không Shift)
 chatInput.addEventListener("keypress", e => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
     sendMessage();
   }
 });
-
 sendBtn.addEventListener("click", sendMessage);
 
+// Hàm gửi tin nhắn lên backend
 async function sendMessage() {
   const text = chatInput.value.trim();
   if (!text) return;
 
+  // Hiển thị tin nhắn user lên UI
   appendMessage("user", text);
   chatInput.value = "";
   chatInput.style.height = "auto";
 
-  // ===== ✅ Lấy 5 câu hỏi gần nhất của người dùng
-  const recentQuestions = messages
-    .filter(msg => msg.role === "user")
-    .slice(-5)
-    .map((msg, idx) => `${idx + 1}. ${msg.text}`)
-    .join("\n");
+  // Chuẩn bị histories (role đã là "user" hoặc "assistant")
+  const histories = messages.map(m => ({
+    role: m.role,
+    content: m.text
+  }));
 
-  // ===== ✅ Tạo prompt cho Gemini
-  const prompt = `Dưới đây là 5 câu hỏi gần nhất:\n${recentQuestions}\n\nVà đây là câu hỏi hiện tại:\n${text}. 
-                ban hay dua vao nhung cau hoi tren de tra loi cho toi. 
-                Neu khong biet thi tra loi la khong biet. Neu cau tra loi co nhieu phan thi phan`;
-
-  // ===== ✅ Gửi đến Gemini
+  // Gọi API /askllms với payload mới
   const res = await fetch(`${API}/askllms`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_id: userId, question: prompt })
+    body: JSON.stringify({
+      user_id: userId,
+      question: text,
+      histories
+    })
   });
-
   const data = await res.json();
 
-  if (res.status !== 200) {
-    appendMessage("bot", data.detail || "Lỗi hệ thống");
+  if (!res.ok) {
+    appendMessage("assistant", data.detail || "Lỗi hệ thống");
     return;
   }
 
-  appendMessage("bot", data.answer);
+  // Hiển thị phản hồi assistant
+  appendMessage("assistant", data.answer);
+  // Lưu vào mảng messages
+  messages.push(
+    { role: "user", text },
+    { role: "assistant", text: data.answer }
+  );
 
-  // ===== ✅ Cập nhật vào message local
-  messages.push({ role: "user", text }, { role: "bot", text: data.answer });
-
-  // ===== ✅ Lưu đoạn chat
+  // Lưu đoạn chat vào DB
   if (currentChatId) {
     await fetch(`${API}/update/${currentChatId}`, {
       method: "PUT",
@@ -86,23 +91,31 @@ async function sendMessage() {
   }
 }
 
+// Hàm append tin nhắn vào chat window
 function appendMessage(role, text) {
   const msg = document.createElement("div");
-  msg.className = `message ${role}`;
-  msg.innerHTML = `<div>${text}</div><div class="message-time">${new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</div>`;
+  msg.className = `message ${role}`;  // CSS class .message.assistant hoặc .message.user
+  msg.innerHTML = `
+    <div>${text}</div>
+    <div class="message-time">
+      ${new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
+    </div>
+  `;
   chatWindow.appendChild(msg);
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
+// Tạo mới một phiên chat
 newChatBtn.addEventListener("click", () => {
   if (messages.length > 0) saveCurrentChat();
   currentChatId = null;
   localStorage.removeItem("chat_id");
   messages = [];
   chatWindow.innerHTML = "";
-  appendMessage("bot", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
+  appendMessage("assistant", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
 });
 
+// Load danh sách các phiên chat trước
 async function loadChatHistory() {
   const res = await fetch(`${API}/list/${userId}`);
   const data = await res.json();
@@ -120,7 +133,9 @@ async function loadChatHistory() {
       </div>
     `;
 
+    // Chọn phiên
     div.addEventListener("click", () => loadChat(chat));
+    // Xóa phiên
     div.querySelector(".delete-btn").addEventListener("click", e => {
       e.stopPropagation();
       deleteChat(chat.id);
@@ -130,6 +145,7 @@ async function loadChatHistory() {
   });
 }
 
+// Load nội dung một phiên chat
 async function loadChat(chat) {
   if (messages.length > 0) await saveCurrentChat();
 
@@ -141,6 +157,7 @@ async function loadChat(chat) {
   messages.forEach(msg => appendMessage(msg.role, msg.text));
 }
 
+// Lưu session chat hiện tại
 async function saveCurrentChat() {
   if (!messages.length) return;
   if (currentChatId) {
@@ -162,6 +179,7 @@ async function saveCurrentChat() {
   loadChatHistory();
 }
 
+// Xóa một phiên chat
 async function deleteChat(chatId) {
   await fetch(`${API}/delete/${chatId}`, { method: "DELETE" });
 
@@ -170,15 +188,16 @@ async function deleteChat(chatId) {
     localStorage.removeItem("chat_id");
     messages = [];
     chatWindow.innerHTML = "";
-    appendMessage("bot", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
+    appendMessage("assistant", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
   }
 
   loadChatHistory();
 }
 
+// Khởi tạo khi load trang
 window.addEventListener("DOMContentLoaded", () => {
   loadChatHistory();
   if (!currentChatId) {
-    appendMessage("bot", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
+    appendMessage("assistant", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
   }
 });
