@@ -35,7 +35,6 @@ async def askllms(
     if sub:
         pkg = db.query(ServicePackage).filter_by(package_id=sub.package_id).first()
         plan_type = pkg.package_name.lower()  # "free" / "pro" / "premium"
-        print("Plan type:", plan_type)
     else:
         print("No active subscription found, defaulting to free plan.")
         plan_type = "free"

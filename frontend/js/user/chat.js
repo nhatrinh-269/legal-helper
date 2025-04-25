@@ -240,8 +240,11 @@ async function typeText(element, fullText) {
 function appendMessage(role, text) {
   const msg = document.createElement("div");
   msg.className = `message ${role}`;
+
+  const markdownHTML = marked.parse(text); // 👉 Chuyển markdown thành HTML
+
   msg.innerHTML = `
-    <div class="message-content">${text}</div>
+    <div class="message-content">${markdownHTML}</div>
     <div class="message-time">
       ${new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
     </div>`;
@@ -249,3 +252,4 @@ function appendMessage(role, text) {
   chatWindow.scrollTop = chatWindow.scrollHeight;
   return msg.querySelector(".message-content");
 }
+

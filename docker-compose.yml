@@ -37,7 +37,7 @@ services:
   lh-api:
     build: 
       context: ../vietnamese-law-bot
-      dockerfile: src/Dockerfile
+      dockerfile: src_nhien/Dockerfile
     image: lh-api
     container_name: lh-api
     restart: unless-stopped
