@@ -1,5 +1,3 @@
-// frontend/js/user/chat.js
-
 // Lấy thông tin user
 const user = JSON.parse(localStorage.getItem("user"));
 const userId = user?.user_id;
@@ -7,6 +5,7 @@ const API = `/api/v1/user/chat`;
 
 let currentChatId = localStorage.getItem("chat_id") || null;
 let messages = [];
+let allChats = [];
 
 // DOM elements
 const chatWindow      = document.getElementById("chatWindow");
@@ -15,16 +14,16 @@ const sendBtn         = document.getElementById("sendBtn");
 const newChatBtn      = document.getElementById("newChatBtn");
 const chatHistoryList = document.getElementById("chatHistoryList");
 const searchBar       = document.querySelector(".search-bar");
+const menuBtn         = document.getElementById("menuBtn");
+const sidebar         = document.getElementById("sidebar");
 
 // Toggle sidebar trên mobile
-// Toggle sidebar trên mobile
-const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.getElementById("sidebar");
-menuBtn.onclick = () => sidebar.classList.toggle("open");
+menuBtn.addEventListener("click", () => {
+  sidebar.classList.toggle("open");
+});
 
-// Đóng sidebar khi click ngoài
+// Đóng sidebar khi click ngoài (mobile)
 document.addEventListener("click", (e) => {
-  // Nếu sidebar đang mở, và click không nằm trong sidebar, và không phải click lên menuBtn
   if (
     sidebar.classList.contains("open") &&
     !sidebar.contains(e.target) &&
@@ -33,10 +32,6 @@ document.addEventListener("click", (e) => {
     sidebar.classList.remove("open");
   }
 });
-
-
-// Dữ liệu local cache của tất cả chats
-let allChats = [];
 
 // Auto-resize textarea
 chatInput.addEventListener("input", () => {
@@ -53,74 +48,6 @@ chatInput.addEventListener("keypress", e => {
 });
 sendBtn.addEventListener("click", sendMessage);
 
-// Hàm gửi tin nhắn lên backend
-async function sendMessage() {
-  const text = chatInput.value.trim();
-  if (!text) return;
-
-  appendMessage("user", text);
-  chatInput.value = "";
-  chatInput.style.height = "auto";
-
-  const histories = messages.map(m => ({ role: m.role, content: m.text }));
-  const thinkingElement = appendMessage("assistant", "💭 Đang suy nghĩ...");
-  thinkingElement.classList.add("blinking");
-
-  const res = await fetch(`${API}/askllms`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_id: userId, question: text, histories })
-  });
-  const data = await res.json();
-  if (!res.ok) {
-    thinkingElement.innerHTML = data.detail || "Lỗi hệ thống";
-    return;
-  }
-
-  thinkingElement.classList.remove("blinking");
-  thinkingElement.innerHTML = "";
-  await typeText(thinkingElement, data.answer);
-
-  messages.push(
-    { role: "user", text },
-    { role: "assistant", text: data.answer }
-  );
-
-  if (currentChatId) {
-    await fetch(`${API}/update/${currentChatId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message_content: messages })
-    });
-  } else {
-    const saveRes = await fetch(`${API}/create`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: userId, message_content: messages })
-    });
-    const saved = await saveRes.json();
-    currentChatId = saved.id;
-    localStorage.setItem("chat_id", currentChatId);
-    await fetchAllChats();
-  }
-}
-
-// Hiệu ứng typing
-async function typeText(element, fullText) {
-  const htmlContent = marked.parse(fullText);
-  element.innerHTML = "";
-  let i = 0;
-  const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = htmlContent;
-  const finalText = tempDiv.innerHTML;
-
-  for (; i <= finalText.length; i++) {
-    element.innerHTML = finalText.substring(0, i);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-    await new Promise(r => setTimeout(r, 1));
-  }
-}
-
 // Tạo mới phiên chat
 newChatBtn.addEventListener("click", () => {
   if (messages.length > 0) saveCurrentChat();
@@ -131,11 +58,33 @@ newChatBtn.addEventListener("click", () => {
   appendMessage("assistant", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
 });
 
-// Fetch toàn bộ chats 1 lần
+// Local search khi gõ
+searchBar.addEventListener("input", e => {
+  const q = e.target.value.trim().toLowerCase();
+  const filtered = allChats.filter(chat =>
+    chat.title.toLowerCase().includes(q) ||
+    chat.message_content.some(m => m.text.toLowerCase().includes(q))
+  );
+  renderChatList(filtered);
+});
+
+// Khởi tạo khi load trang
+window.addEventListener("DOMContentLoaded", () => {
+  fetchAllChats();
+  if (!currentChatId) {
+    appendMessage("assistant", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
+  }
+});
+
+// Fetch toàn bộ chats
 async function fetchAllChats() {
-  const res = await fetch(`${API}/list/${userId}`);
-  allChats = await res.json();
-  renderChatList(allChats);
+  try {
+    const res = await fetch(`${API}/list/${userId}`);
+    allChats = await res.json();
+    renderChatList(allChats);
+  } catch (e) {
+    console.error("Lỗi khi fetch tất cả chats:", e);
+  }
 }
 
 // Render sidebar list
@@ -150,7 +99,9 @@ function renderChatList(chats) {
         <span class="chat-title">${chat.title}</span>
         <button class="delete-btn" data-id="${chat.id}">🗑</button>
       </div>`;
+    // Click vào session để load
     div.addEventListener("click", () => loadChat(chat));
+    // Xoá session
     div.querySelector(".delete-btn").addEventListener("click", e => {
       e.stopPropagation();
       deleteChat(chat.id);
@@ -158,16 +109,6 @@ function renderChatList(chats) {
     chatHistoryList.appendChild(div);
   });
 }
-
-// Local search khi gõ
-searchBar.addEventListener("input", e => {
-  const q = e.target.value.trim().toLowerCase();
-  const filtered = allChats.filter(chat =>
-    chat.title.toLowerCase().includes(q) ||
-    chat.message_content.some(m => m.text.toLowerCase().includes(q))
-  );
-  renderChatList(filtered);
-});
 
 // Load một phiên chat
 async function loadChat(chat) {
@@ -182,17 +123,18 @@ async function loadChat(chat) {
 // Lưu phiên chat hiện tại
 async function saveCurrentChat() {
   if (!messages.length) return;
+  const payload = { message_content: messages };
   if (currentChatId) {
     await fetch(`${API}/update/${currentChatId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message_content: messages })
+      body: JSON.stringify(payload)
     });
   } else {
     const res = await fetch(`${API}/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: userId, message_content: messages })
+      body: JSON.stringify({ user_id: userId, ...payload })
     });
     const data = await res.json();
     currentChatId = data.id;
@@ -214,6 +156,86 @@ async function deleteChat(chatId) {
   await fetchAllChats();
 }
 
+// Gửi tin nhắn lên backend
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  appendMessage("user", text);
+  chatInput.value = "";
+  chatInput.style.height = "auto";
+
+  // Chuẩn bị hiển thị thinking
+  const thinkingEl = appendMessage("assistant", "💭 Đang suy nghĩ...");
+  thinkingEl.classList.add("blinking");
+
+  // Gửi request
+  try {
+    const histories = messages.map(m => ({ role: m.role, content: m.text }));
+    const res = await fetch(`${API}/askllms`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: userId, question: text, histories })
+    });
+    const data = await res.json();
+    thinkingEl.classList.remove("blinking");
+
+    if (!res.ok) {
+      thinkingEl.textContent = data.detail || "Lỗi hệ thống";
+      return;
+    }
+
+    // Hiệu ứng gõ text
+    thinkingEl.textContent = "";
+    await typeText(thinkingEl, data.answer);
+
+    // Lưu messages
+    messages.push(
+      { role: "user", text },
+      { role: "assistant", text: data.answer }
+    );
+
+    // Cập nhật DB
+    if (currentChatId) {
+      await fetch(`${API}/update/${currentChatId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message_content: messages })
+      });
+    } else {
+      const saveRes = await fetch(`${API}/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId, message_content: messages })
+      });
+      const saved = await saveRes.json();
+      currentChatId = saved.id;
+      localStorage.setItem("chat_id", currentChatId);
+      await fetchAllChats();
+    }
+  } catch (e) {
+    thinkingEl.classList.remove("blinking");
+    thinkingEl.textContent = "Lỗi kết nối";
+    console.error(e);
+  }
+}
+
+// Hiệu ứng typing
+async function typeText(element, fullText) {
+  const htmlContent = marked.parse(fullText);
+  element.innerHTML = "";
+  let i = 0;
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = htmlContent;
+  const finalText = tempDiv.innerHTML;
+
+  for (; i <= finalText.length; i++) {
+    element.innerHTML = finalText.substring(0, i);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+    await new Promise(r => setTimeout(r, 1));
+  }
+}
+
 // Thêm message vào chat window
 function appendMessage(role, text) {
   const msg = document.createElement("div");
@@ -222,17 +244,8 @@ function appendMessage(role, text) {
     <div class="message-content">${text}</div>
     <div class="message-time">
       ${new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
-    </div>
-  `;
+    </div>`;
   chatWindow.appendChild(msg);
   chatWindow.scrollTop = chatWindow.scrollHeight;
   return msg.querySelector(".message-content");
 }
-
-// Khởi tạo
-window.addEventListener("DOMContentLoaded", () => {
-  fetchAllChats();
-  if (!currentChatId) {
-    appendMessage("assistant", "Xin chào! Tôi là Legal Helper. Bạn cần hỗ trợ gì?");
-  }
-});
