@@ -3,7 +3,7 @@ async function fetchPlans() {
     container.innerHTML = "";
   
     try {
-      const res = await fetch("/api/v1/user/subscription/plans");
+      const res = await fetch(`/api/v1/user/subscription/plans`);
   
       if (!res.ok) {
         throw new Error(`Lỗi HTTP ${res.status}: ${res.statusText}`);

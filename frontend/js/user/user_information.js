@@ -2,7 +2,7 @@
 
 const user      = JSON.parse(localStorage.getItem("user"));
 const userId    = user?.user_id;
-const API_BASE  = "http://localhost:8000/api/v1/user/info";
+const API_BASE  = `/api/v1/user/info`;
 
 const infoList      = document.getElementById("infoList");
 const editBtn       = document.getElementById("editBtn");

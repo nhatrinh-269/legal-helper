@@ -7,7 +7,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
   const password  = e.target.password.value;
 
   try {
-    const res = await fetch("http://localhost:8000/api/v1/auth/register", {
+    const res = await fetch("/api/v1/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

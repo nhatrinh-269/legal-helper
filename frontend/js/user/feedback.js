@@ -1,6 +1,6 @@
 const user = JSON.parse(localStorage.getItem("user"));
 const userId = user?.user_id;
-const API_BASE = "http://localhost:8000/api/v1/user/feedback";
+const API_BASE = `/api/v1/user/feedback`;
 
 // Load lịch sử phản hồi
 async function loadFeedback() {
