@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (statusFilter.value) params.append("status", statusFilter.value);
   
       try {
-        const res = await fetch(`/api/v1/admin/users?${params}`);
+        const res = await fetch(`/api/v1/admin/users/?${params}`);
         if (!res.ok) throw new Error(`Load users failed: ${res.status}`);
         const users = await res.json();
         renderTable(users);
