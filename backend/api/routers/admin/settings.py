@@ -3,7 +3,7 @@
 from fastapi import APIRouter, HTTPException, status
 from schemas.admin.settings import SettingsResponse, SettingsUpdateRequest
 
-router = APIRouter(prefix="/api/v1/admin/settings", tags=["Admin Settings"])
+router = APIRouter()
 
 # In-memory store giả lập
 _settings_store = {
